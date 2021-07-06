@@ -1,5 +1,5 @@
 {
-  "name": "tsquare",
+  "name": "amore-qa",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -32,8 +32,8 @@
     "eslint-webpack-plugin": "^2.5.3",
     "html-webpack-plugin": "^5.3.1",
     "prettier": "^2.2.1",
-    "sass": "~1.32.8",
-    "sass-loader": "^11.0.1",
+    "sass": "^1.32.13",
+    "sass-loader": "^11.1.1",
     "style-loader": "^2.0.0",
     "webpack": "^5.35.0",
     "webpack-cli": "^4.6.0",
@@ -52,6 +52,6 @@
     "react-router-dom": "^5.2.0",
     "redux": "^4.0.5",
     "redux-logger": "^3.0.6",
-    "styled-components": "^5.2.3"
+    "styled-components": "^5.3.0"
   }
 }

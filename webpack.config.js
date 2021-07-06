@@ -73,4 +73,9 @@ module.exports = {
       IMAGE_PATH: JSON.stringify("./assets/images"),
     }),
   ],
+  resolve: {
+    alias: {
+      "@style": path.resolve(__dirname, "src/assets/scss"),
+    },
+  },
 };
