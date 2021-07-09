@@ -9,21 +9,22 @@ import { getAddedDay, convertDateFormat } from "../../utils";
 import { devices } from "../../utils/listData";
 
 const Wrapper = styled.nav`
-  height: 4rem;
+  height: 4.2rem;
   padding: 0 ${({ theme }) => theme.size.baseSpace};
   margin-bottom: ${({ theme }) => theme.size.componentSpace};
   background-color: #eff0f3;
   border: 1px solid #cbced5;
-`;
-
-const Ul = styled.ul`
-  display: flex;
-  align-items: center;
-  height: inherit;
-  list-style: none;
+  .list-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: inherit;
+    list-style: none;
+  }
 `;
 
 const Label = styled.label`
+  margin-right: ${({ theme }) => theme.size.baseSpace};
   ${(props) =>
     props.checked &&
     css`
@@ -69,8 +70,8 @@ const LNB = () => {
 
   return (
     <Wrapper>
-      <Ul>
-        <li>
+      <ul className="list-wrapper">
+        <li className="details">
           <RadioButton
             id="fail"
             name="state"
@@ -91,32 +92,26 @@ const LNB = () => {
           <Label htmlFor="pass" checked={selectedInputs.state === "pass"}>
             Pass
           </Label>
-        </li>
-        <li>
           <DropDownList
             name="date"
             data={dateRangeList}
             value={selectedInputs.date}
             onChange={handleChange}
           />
-        </li>
-        <li>
           <DropDownList
             name="device"
             data={devices}
             value={selectedInputs.device}
             onChange={handleChange}
           />
-        </li>
-        <li>
           <Button look="flat">상세보기</Button>
         </li>
-        <li>
+        <li className="excel">
           <Button look="flat">
             <RiFileExcel2Fill />
           </Button>
         </li>
-      </Ul>
+      </ul>
     </Wrapper>
   );
 };

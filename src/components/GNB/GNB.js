@@ -19,20 +19,35 @@ import { convertDateFormat } from "../../utils";
 const level2List = Object.keys(treemenu); // 첫번째 드롭다운 리스트
 
 const Wrapper = styled.nav`
-  height: 4.3rem;
+  height: 4.8rem;
   padding: 0 ${({ theme }) => theme.size.baseSpace};
   background-color: #d6dae0;
-  border-bottom: 1px solid #a5aab3;
-`;
-
-const Ul = styled.ul`
-  display: flex;
-  align-items: center;
-  height: inherit;
-  list-style: none;
+  border-bottom: 1px solid #abb3c1;
+  .list-wrapper {
+    display: flex;
+    align-items: center;
+    height: inherit;
+    list-style: none;
+  }
+  .feature,
+  .search {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .response {
+    padding: 0.9rem 5rem;
+    border: 1px solid #abb3c1;
+    border-width: 0 1px;
+  }
+  .search {
+    padding-left: ${({ theme }) => theme.size.baseSpace};
+  }
 `;
 
 const Label = styled.label`
+  margin-right: ${({ theme }) => theme.size.baseSpace};
   ${(props) =>
     props.checked &&
     css`
@@ -83,8 +98,8 @@ const GNB = () => {
 
   return (
     <Wrapper>
-      <Ul>
-        <li>
+      <ul className="list-wrapper">
+        <li className="feature">
           <RadioButton
             id="featureTest"
             value="기능테스트"
@@ -107,7 +122,7 @@ const GNB = () => {
             onChange={(e) => dispatch(setLevel3(e.target.value))}
           />
         </li>
-        <li>
+        <li className="response">
           <RadioButton
             id="response"
             value="응답시간"
@@ -118,7 +133,7 @@ const GNB = () => {
             응답시간
           </Label>
         </li>
-        <li>
+        <li className="search">
           <DateRangePicker
             max={new Date()}
             startDateInput={() => (
@@ -131,11 +146,9 @@ const GNB = () => {
             }}
             onChange={handleChange}
           />
-        </li>
-        <li>
           <Button icon="search" look="flat" onClick={onClick} />
         </li>
-      </Ul>
+      </ul>
     </Wrapper>
   );
 };
