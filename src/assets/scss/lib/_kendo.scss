@@ -20,9 +20,6 @@
 }
 
 // DatePicker
-.k-daterangepicker-wrap {
-  display: flex !important;
-}
 .k-datepicker {
   width: 24rem;
   height: 48px;
@@ -49,7 +46,6 @@
     color: #24252b;
   }
 }
-
 .k-calendar-header .k-button.k-flat,
 .k-calendar-nav .k-button.k-flat {
   width: fit-content;
@@ -102,18 +98,18 @@
 .k-list {
   color: #24252b;
   font-size: 1.3rem;
-}
-.k-list .k-item {
-  padding: 1rem;
-  word-break: break-all;
-  &.k-state-selected {
-    color: #2f56a7;
-    background-color: rgba(0, 0, 0, 0.04);
-  }
-  &:hover {
-    background-color: #ebebeb;
+  .k-item {
+    padding: 1rem;
+    word-break: break-all;
     &.k-state-selected {
-      color: #202c5c;
+      color: #2f56a7;
+      background-color: rgba(0, 0, 0, 0.04);
+    }
+    &:hover {
+      background-color: #ebebeb;
+      &.k-state-selected {
+        color: #202c5c;
+      }
     }
   }
 }
@@ -153,6 +149,13 @@
 }
 
 // LNB - Button
+.details .k-dropdown {
+  height: 3rem;
+  .k-input {
+    padding: 0 0.7rem;
+    line-height: 3rem;
+  }
+}
 .details .k-button.k-flat {
   height: 40px;
   font-family: inherit;
@@ -168,5 +171,79 @@
   color: #2f56a7;
   svg {
     font-size: 3rem;
+  }
+}
+
+@media screen and (max-width: 1800px) {
+  label {
+    font-size: 1.4rem;
+  }
+  .k-radio {
+    width: 14px;
+    height: 14px;
+    margin-right: 0.5rem;
+    &::before {
+      width: 5px;
+      height: 5px;
+    }
+  }
+  .k-datepicker {
+    width: 16rem;
+    height: inherit;
+    margin-right: 1.3rem;
+    .k-picker-wrap .k-dateinput {
+      margin-top: inherit;
+      font-size: 1.4rem;
+    }
+    .k-select {
+      padding: 0.7rem;
+      .k-icon {
+        font-size: inherit;
+      }
+    }
+  }
+  .k-dropdown {
+    width: 19rem;
+    height: inherit;
+    margin-right: 1.3rem;
+    font-size: 1.4rem;
+    .k-dropdown-wrap .k-select {
+      padding: 0.7rem;
+      .k-icon {
+        font-size: inherit;
+      }
+    }
+  }
+  .k-input {
+    padding: 0.7rem;
+    line-height: inherit;
+  }
+  .k-list {
+    font-size: 1.3rem;
+    .k-item {
+      padding: 0.7rem;
+    }
+  }
+  .k-button {
+    &.k-flat {
+      width: 5rem;
+      height: 3rem;
+    }
+    .k-icon {
+      font-size: 1.4rem;
+    }
+  }
+  // LNB
+  .details .k-button.k-flat {
+    width: 6rem;
+    height: inherit;
+    font-size: 1.3rem;
+  }
+  .excel .k-button.k-flat {
+    height: inherit;
+    padding: 0.5rem;
+    svg {
+      font-size: 2.2rem;
+    }
   }
 }

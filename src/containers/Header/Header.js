@@ -4,7 +4,7 @@ import styled from "styled-components";
 const Wrapper = styled.header`
   position: relative;
   height: 70px;
-  border: 1px solid #a5aab3;
+  border-bottom: 1px solid #a5aab3;
   background-color: #fff;
   box-shadow: 0px 1px 3px #a5aab37d;
   text-align: center;
