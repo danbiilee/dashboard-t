@@ -5,8 +5,12 @@ import { RadioButton } from "@progress/kendo-react-inputs";
 import { DropDownList } from "@progress/kendo-react-dropdowns";
 import { Button } from "@progress/kendo-react-buttons";
 import { RiFileExcel2Fill } from "react-icons/ri";
-import { getAddedDay, convertDateFormat } from "../../utils";
-import { devices } from "../../utils/listData";
+import {
+  getAddedDay,
+  convertDateFormat,
+  filterDropDownList,
+} from "../../utils";
+import { devices } from "../../../config/nav.config";
 
 const Wrapper = styled.nav`
   height: 64px;
@@ -38,6 +42,7 @@ const Label = styled.label`
       color: #2f56a7;
     `}
 `;
+
 const getDateRangeList = (start, end) => {
   const result = [];
   let curr = start;
@@ -54,7 +59,7 @@ const LNB = () => {
   const [selectedInputs, setSelectedInputs] = useState({
     state: "fail",
     date: dateRangeList[dateRangeList.length - 1],
-    device: devices[0],
+    device: filterDropDownList(devices)[0],
   });
 
   useEffect(() => {
@@ -109,7 +114,9 @@ const LNB = () => {
           />
           <DropDownList
             name="device"
-            data={devices}
+            data={filterDropDownList(devices)}
+            textField="menuValue"
+            dataItemKey="id"
             value={selectedInputs.device}
             onChange={handleChange}
           />

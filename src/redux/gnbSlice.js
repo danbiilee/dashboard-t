@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { treemenu } from "../utils/listData";
+import { treemenu } from "../../config/nav.config";
 import { getStartDate, convertDateFormat } from "../utils";
 
 const initialState = {
@@ -9,7 +9,9 @@ const initialState = {
   startDate: convertDateFormat(getStartDate()),
   endDate: convertDateFormat(new Date()),
 };
-initialState.level3 = treemenu[initialState.level2][0];
+initialState.level3 = treemenu[initialState.level2].find(
+  (menu) => menu.active && menu.order === 1
+);
 
 export const gnbSlice = createSlice({
   name: "gnb",
@@ -24,7 +26,9 @@ export const gnbSlice = createSlice({
     setLevel2: (state, action) => {
       state.level2 = action.payload;
       // 초기화
-      state.level3 = treemenu[action.payload][0];
+      state.level3 = treemenu[action.payload].find(
+        (menu) => menu.active && menu.order === 1
+      );
     },
     setLevel3: (state, action) => {
       state.level3 = action.payload;

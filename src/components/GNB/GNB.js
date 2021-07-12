@@ -12,8 +12,12 @@ import { RadioButton } from "@progress/kendo-react-inputs";
 import { DropDownList } from "@progress/kendo-react-dropdowns";
 import { DatePicker } from "@progress/kendo-react-dateinputs";
 import { Button } from "@progress/kendo-react-buttons";
-import { treemenu } from "../../utils/listData";
-import { convertDateFormat, getRangeMinDate } from "../../utils";
+import { treemenu } from "../../../config/nav.config";
+import {
+  convertDateFormat,
+  getRangeMinDate,
+  filterDropDownList,
+} from "../../utils";
 
 const level2List = Object.keys(treemenu); // 첫번째 드롭다운 리스트
 
@@ -70,9 +74,11 @@ const GNB = () => {
   );
 
   // 두번째 드롭다운 리스트
-  const [level3List, setLevel3List] = useState(treemenu[level2]);
+  const [level3List, setLevel3List] = useState(
+    filterDropDownList(treemenu[level2])
+  );
   useEffect(() => {
-    setLevel3List(treemenu[level2]);
+    setLevel3List(filterDropDownList(treemenu[level2]));
   }, [level2]);
 
   const [searchDate, setSearchDate] = useState({
@@ -145,6 +151,8 @@ const GNB = () => {
           />
           <DropDownList
             data={level3List}
+            textField="menuValue"
+            dataItemKey="id"
             value={level3}
             disabled={level1 === "응답시간"}
             onChange={(e) => dispatch(setLevel3(e.target.value))}

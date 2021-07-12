@@ -23,3 +23,7 @@ export const getRangeMinDate = () => {
   d.setMonth(d.getMonth() - 3);
   return d;
 };
+
+export const filterDropDownList = (list) => {
+  return list.filter((item) => item.active).sort((a, b) => a.order - b.order);
+};
