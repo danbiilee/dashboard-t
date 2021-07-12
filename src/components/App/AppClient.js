@@ -13,9 +13,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   overflow-y: auto;
-  /* min-width: 1790px; */
   min-width: 1320px;
-  min-height: 970px;
   height: 100%;
   background-color: #f8f9fa;
 `;
