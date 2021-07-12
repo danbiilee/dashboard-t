@@ -1,6 +1,6 @@
 const size = {
-  baseSpace: "1.3rem",
-  componentSpace: "1rem",
+  baseSpace: "2rem",
+  componentSpace: "1.3rem",
 };
 
 export const theme = {

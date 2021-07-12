@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const Wrapper = styled.header`
   position: relative;
-  height: 4.3rem;
+  height: 70px;
   border: 1px solid #a5aab3;
   background-color: #fff;
   box-shadow: 0px 1px 3px #a5aab37d;
@@ -13,13 +13,13 @@ const Wrapper = styled.header`
     top: 0;
     left: ${({ theme }) => theme.size.baseSpace};
     color: #2f56a7;
-    font-size: 1.4rem;
-    line-height: 4.3rem;
+    font-size: 1.9rem;
+    line-height: 70px;
   }
   .title {
     color: #202c5c;
-    font-size: 1.6rem;
-    line-height: 4.3rem;
+    font-size: 2.5rem;
+    line-height: 70px;
   }
 `;
 

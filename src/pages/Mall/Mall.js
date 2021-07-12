@@ -11,7 +11,8 @@ const Wrapper = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: ${({ theme }) => theme.size.baseSpace};
+  padding: ${({ theme }) =>
+    `${theme.size.componentSpace} ${theme.size.baseSpace}`};
 `;
 
 const Section = styled.section`
@@ -19,8 +20,8 @@ const Section = styled.section`
   display: flex;
   flex-direction: column;
   .title {
-    margin-bottom: ${({ theme }) => theme.size.baseSpace};
-    font-size: 1.6rem;
+    margin-bottom: ${({ theme }) => theme.size.componentSpace};
+    font-size: 2rem;
     text-align: center;
   }
   .chart {

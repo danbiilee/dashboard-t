@@ -1,25 +1,21 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import {
-  AiOutlineFile,
-  AiOutlineFileText,
-  AiOutlineGlobal,
-} from "react-icons/ai";
+import { AiFillFile, AiFillFileText, AiOutlineGlobal } from "react-icons/ai";
 import { FaMobileAlt } from "react-icons/fa";
 
-const Wrapper = styled.div`
-  display: flex;
+const Wrapper = styled.span`
+  display: inline-flex;
   justify-content: center;
   align-items: center;
-  width: 25px;
-  height: 25px;
-  margin-right: ${({ theme }) => theme.size.baseSpace};
+  width: 30px;
+  height: 30px;
+  margin-right: 1.5rem;
   background-color: #abb3c1;
   border-radius: 3px;
   svg {
     fill: #fff;
-    font-size: 1.3rem;
+    font-size: 1.6rem;
   }
 `;
 
@@ -28,8 +24,8 @@ const DetailIcon = ({ type }) => {
     <Wrapper>
       {type === "device" && <FaMobileAlt />}
       {type === "global" && <AiOutlineGlobal />}
-      {type === "type" && <AiOutlineFile />}
-      {type === "message" && <AiOutlineFileText />}
+      {type === "type" && <AiFillFile />}
+      {type === "message" && <AiFillFileText />}
     </Wrapper>
   );
 };

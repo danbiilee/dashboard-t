@@ -16,7 +16,8 @@ const Wrapper = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: ${({ theme }) => theme.size.baseSpace};
+  padding: ${({ theme }) =>
+    `${theme.size.componentSpace} ${theme.size.baseSpace}`};
 `;
 
 const Section = styled.section`
@@ -29,7 +30,6 @@ const Section = styled.section`
   .title {
     position: relative;
     margin-bottom: ${({ theme }) => theme.size.componentSpace};
-    font-size: 1.4rem;
     text-align: center;
   }
   .browser {
@@ -39,11 +39,11 @@ const Section = styled.section`
     display: flex;
     align-items: center;
     color: #2f56a7;
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     svg {
       margin-top: -2px;
       margin-right: 0.5rem;
-      font-size: 1.8rem;
+      font-size: 2.7rem;
     }
   }
   .chart {

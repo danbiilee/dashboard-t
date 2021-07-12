@@ -9,7 +9,7 @@ import { getAddedDay, convertDateFormat } from "../../utils";
 import { devices } from "../../utils/listData";
 
 const Wrapper = styled.nav`
-  height: 4.2rem;
+  height: 64px;
   padding: 0 ${({ theme }) => theme.size.baseSpace};
   margin-bottom: ${({ theme }) => theme.size.componentSpace};
   background-color: #eff0f3;
@@ -20,6 +20,13 @@ const Wrapper = styled.nav`
     justify-content: space-between;
     height: inherit;
     list-style: none;
+  }
+  .details {
+    display: flex;
+    align-items: center;
+  }
+  .radio-wrapper {
+    margin-right: 3rem;
   }
 `;
 
@@ -72,26 +79,28 @@ const LNB = () => {
     <Wrapper>
       <ul className="list-wrapper">
         <li className="details">
-          <RadioButton
-            id="fail"
-            name="state"
-            value="fail"
-            checked={selectedInputs.state === "fail"}
-            onChange={handleChange}
-          />
-          <Label htmlFor="fail" checked={selectedInputs.state === "fail"}>
-            Fail
-          </Label>
-          <RadioButton
-            id="pass"
-            name="state"
-            value="pass"
-            checked={selectedInputs.state === "pass"}
-            onChange={handleChange}
-          />
-          <Label htmlFor="pass" checked={selectedInputs.state === "pass"}>
-            Pass
-          </Label>
+          <div className="radio-wrapper">
+            <RadioButton
+              id="fail"
+              name="state"
+              value="fail"
+              checked={selectedInputs.state === "fail"}
+              onChange={handleChange}
+            />
+            <Label htmlFor="fail" checked={selectedInputs.state === "fail"}>
+              Fail
+            </Label>
+            <RadioButton
+              id="pass"
+              name="state"
+              value="pass"
+              checked={selectedInputs.state === "pass"}
+              onChange={handleChange}
+            />
+            <Label htmlFor="pass" checked={selectedInputs.state === "pass"}>
+              Pass
+            </Label>
+          </div>
           <DropDownList
             name="date"
             data={dateRangeList}

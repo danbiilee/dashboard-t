@@ -16,25 +16,38 @@ const Section = styled.section`
   }
   border: 1px solid #cbced5;
   background-color: #fff;
-
   .title {
     position: relative;
     margin-bottom: ${({ theme }) => theme.size.componentSpace};
     color: #202c5c;
-    font-size: 1.3rem;
+    font-size: 1.5rem;
     text-align: center;
   }
   .browser {
     position: absolute;
-    top: 0;
+    top: -2px;
     left: 0;
     display: flex;
     align-items: center;
     color: #2f56a7;
+    font-size: 1.3rem;
+    .circle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 23px;
+      height: 23px;
+      background: gray;
+      border-radius: 50%;
+      margin-right: 0.5rem;
+      background-color: #2f56a7;
+    }
     svg {
-      margin-top: -2px;
-      margin-right: 0.3rem;
+      color: #fff;
       font-size: 1.5rem;
+    }
+    &.ios svg {
+      margin-left: 1px;
     }
   }
   .chart {
@@ -53,7 +66,9 @@ const Response = () => {
       <Section>
         <h3 className="title">
           <div className="browser">
-            <AiFillAndroid />
+            <span className="circle">
+              <AiFillAndroid />
+            </span>
             AOS
           </div>
           MAIN
@@ -62,8 +77,10 @@ const Response = () => {
       </Section>
       <Section>
         <h3 className="title">
-          <div className="browser">
-            <AiFillApple />
+          <div className="browser ios">
+            <span className="circle">
+              <AiFillApple />
+            </span>
             iOS
           </div>
           MAIN
@@ -73,7 +90,9 @@ const Response = () => {
       <Section>
         <h3 className="title">
           <div className="browser">
-            <AiFillAndroid />
+            <span className="circle">
+              <AiFillAndroid />
+            </span>
             AOS
           </div>
           MAIN
@@ -82,8 +101,10 @@ const Response = () => {
       </Section>
       <Section>
         <h3 className="title">
-          <div className="browser">
-            <AiFillApple />
+          <div className="browser ios">
+            <span className="circle">
+              <AiFillApple />
+            </span>
             iOS
           </div>
           MAIN
@@ -93,7 +114,9 @@ const Response = () => {
       <Section>
         <h3 className="title">
           <div className="browser">
-            <AiFillAndroid />
+            <span className="circle">
+              <AiFillAndroid />
+            </span>
             AOS
           </div>
           MAIN
@@ -102,8 +125,10 @@ const Response = () => {
       </Section>
       <Section>
         <h3 className="title">
-          <div className="browser">
-            <AiFillApple />
+          <div className="browser ios">
+            <span className="circle">
+              <AiFillApple />
+            </span>
             iOS
           </div>
           MAIN

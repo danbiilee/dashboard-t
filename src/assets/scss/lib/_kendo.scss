@@ -1,13 +1,13 @@
 // RadioButton
 .k-radio {
-  width: 14px;
-  height: 14px;
-  margin-right: 0.5rem;
+  width: 18px;
+  height: 18px;
+  margin-right: 0.8rem;
   background-color: #fff;
   transition: border-color 0.2s ease-out;
   &::before {
-    width: 5px;
-    height: 5px;
+    width: 6px;
+    height: 6px;
   }
   &:hover {
     border-color: #202c5c;
@@ -21,25 +21,30 @@
 
 // DatePicker
 .k-datepicker {
-  width: 16rem;
+  width: 24rem;
+  height: 48px;
   border: 1px solid #abb3c1;
   background-color: #fff;
-  margin-right: 1.3rem;
-  & .k-picker-wrap {
+  margin-right: 2rem;
+  .k-picker-wrap {
     border-width: 0;
+    .k-dateinput {
+      margin-top: -3px !important;
+      font-size: 1.5rem;
+      font-family: inherit;
+    }
   }
-  & .k-select {
-    padding: 0.7rem;
+  .k-select {
+    padding: 1.3rem;
     color: #abb3c1;
     transition: color 0.2s ease-out;
+    .k-icon {
+      font-size: 2rem;
+    }
   }
   &:hover .k-select {
     color: #24252b;
   }
-}
-.k-dateinput {
-  font-size: 1.1rem;
-  font-family: inherit;
 }
 .k-calendar-header .k-button.k-flat,
 .k-calendar-nav .k-button.k-flat {
@@ -59,19 +64,23 @@
 
 // DropDownList
 .k-dropdown {
-  width: 19rem;
-  margin-right: 1.3rem;
+  width: 30rem;
+  height: 48px;
+  margin-right: 2rem;
   border: 1px solid #abb3c1;
   background-color: #fff;
-  font-size: 1.1rem;
+  font-size: 1.5rem;
   font-family: inherit;
-  & .k-dropdown-wrap {
+  .k-dropdown-wrap {
     border-width: 0;
-    & .k-select {
-      padding: 0.7rem;
+    .k-select {
+      padding: 1.3rem;
       border-left: 1px solid #abb3c1;
       color: #abb3c1;
       transition: color 0.2s ease-out;
+      .k-icon {
+        font-size: 1.8rem;
+      }
     }
     &:hover .k-select {
       color: #24252b;
@@ -79,16 +88,20 @@
   }
 }
 .k-input {
+  display: block;
   height: 100%;
-  padding: 0.7rem;
+  padding: 0 1.5rem;
+  line-height: 48px;
+  white-space: nowrap;
   cursor: pointer;
 }
 .k-list {
   color: #24252b;
-  font-size: 1.1rem;
+  font-size: 1.3rem;
 }
 .k-list .k-item {
-  padding: 0.7rem;
+  padding: 1rem;
+  word-break: break-all;
   &.k-state-selected {
     color: #2f56a7;
     background-color: rgba(0, 0, 0, 0.04);
@@ -105,8 +118,8 @@
 .k-button {
   border-radius: 0;
   &.k-flat {
-    width: 5rem;
-    height: 3rem;
+    width: 7.5rem;
+    height: 48px;
     background-color: #2f56a7 !important;
     color: #fff;
     transition: all 0.2s ease-out;
@@ -115,25 +128,41 @@
       color: #fff;
     }
   }
-  & .k-icon {
-    font-size: 1.3rem;
+  .k-icon {
+    font-size: 1.8rem;
   }
 }
 .k-icon {
   cursor: pointer;
 }
-// Button - LNB
-.details .k-button.k-flat {
-  width: 6rem;
-  font-size: 1.1rem;
-  font-family: inherit;
+
+// LNB - DropDownList
+.details .k-dropdown {
+  width: 20rem;
+  height: 40px;
+  .k-input {
+    line-height: 40px;
+  }
+  .k-dropdown-wrap .k-select {
+    padding: 1rem;
+  }
 }
+
+// LNB - Button
+.details .k-button.k-flat {
+  height: 40px;
+  font-family: inherit;
+  font-weight: bold;
+}
+
+// LNB - Excel Button
 .excel .k-button.k-flat {
   width: fit-content;
-  padding: 0.5rem;
+  height: 40px;
+  padding: 1rem;
   background: none !important;
   color: #2f56a7;
-  & svg {
-    font-size: 2.2rem;
+  svg {
+    font-size: 3rem;
   }
 }

@@ -7,9 +7,9 @@ const Wrapper = styled.div`
   ${(props) =>
     props.type === "flex"
       ? css`
-          flex: 1.3;
+          flex: 1 0 40rem;
           display: flex;
-          margin-bottom: ${({ theme }) => theme.size.baseSpace};
+          margin-bottom: ${({ theme }) => theme.size.componentSpace};
         `
       : css`
           flex: 1;

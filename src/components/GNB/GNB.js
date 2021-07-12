@@ -19,30 +19,35 @@ import { convertDateFormat } from "../../utils";
 const level2List = Object.keys(treemenu); // 첫번째 드롭다운 리스트
 
 const Wrapper = styled.nav`
-  height: 4.8rem;
+  height: 70px;
   padding: 0 ${({ theme }) => theme.size.baseSpace};
   background-color: #d6dae0;
   border-bottom: 1px solid #abb3c1;
   .list-wrapper {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     height: inherit;
     list-style: none;
   }
   .feature,
+  .response,
   .search {
-    flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;
   }
   .response {
-    padding: 0.9rem 5rem;
+    flex: 0.8;
+    height: 48px;
     border: 1px solid #abb3c1;
     border-width: 0 1px;
+    label {
+      margin-right: 0;
+    }
   }
   .search {
-    padding-left: ${({ theme }) => theme.size.baseSpace};
+    padding-left: ${({ theme }) => theme.size.componentSpace};
   }
 `;
 
