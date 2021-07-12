@@ -10,11 +10,10 @@ import { useHistory } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { RadioButton } from "@progress/kendo-react-inputs";
 import { DropDownList } from "@progress/kendo-react-dropdowns";
-import { DateRangePicker } from "@progress/kendo-react-dateinputs";
+import { DatePicker } from "@progress/kendo-react-dateinputs";
 import { Button } from "@progress/kendo-react-buttons";
-import { CustomStartDateInput, CustomEndDateInput } from "../CustomDatePicker";
 import { treemenu } from "../../utils/listData";
-import { convertDateFormat } from "../../utils";
+import { convertDateFormat, getRangeMinDate } from "../../utils";
 
 const level2List = Object.keys(treemenu); // 첫번째 드롭다운 리스트
 
@@ -48,10 +47,13 @@ const Wrapper = styled.nav`
   }
   .search {
     padding-left: ${({ theme }) => theme.size.componentSpace};
+    label {
+      margin-right: ${({ theme }) => theme.size.componentSpace};
+    }
   }
 `;
 
-const Label = styled.label`
+const RadioLabel = styled.label`
   margin-right: ${({ theme }) => theme.size.baseSpace};
   ${(props) =>
     props.checked &&
@@ -73,21 +75,42 @@ const GNB = () => {
     setLevel3List(treemenu[level2]);
   }, [level2]);
 
-  const [selectedStartDate, setSelectedStartDate] = useState(startDate);
-  const [selectedEndDate, setSelectedEndDate] = useState(endDate);
+  const [searchDate, setSearchDate] = useState({
+    startDate,
+    endDate,
+  });
   const handleChange = (e) => {
-    const { start, end } = e.value;
-    if (start !== null && end !== null) {
-      setSelectedStartDate(convertDateFormat(start));
-      setSelectedEndDate(convertDateFormat(end));
+    const { name, value } = e.target;
+    if (
+      name === "startDate" &&
+      new Date(value) > new Date(searchDate.endDate)
+    ) {
+      setSearchDate({
+        ...searchDate,
+        startDate: searchDate.endDate,
+      });
+      return;
+    } else if (
+      name === "endDate" &&
+      new Date(value) < new Date(searchDate.startDate)
+    ) {
+      setSearchDate({
+        ...searchDate,
+        endDate: searchDate.startDate,
+      });
+      return;
     }
+    setSearchDate({
+      ...searchDate,
+      [name]: convertDateFormat(value),
+    });
   };
 
   const onClick = useCallback(() => {
     dispatch(
       setDateRange({
-        start: selectedStartDate,
-        end: selectedEndDate,
+        start: searchDate.startDate,
+        end: searchDate.endDate,
       })
     );
 
@@ -99,7 +122,7 @@ const GNB = () => {
     } else {
       history.push("/response");
     }
-  }, [level1, level2, history, dispatch, selectedStartDate, selectedEndDate]);
+  }, [level1, level2, history, dispatch, searchDate]);
 
   return (
     <Wrapper>
@@ -111,9 +134,9 @@ const GNB = () => {
             checked={level1 === "기능테스트"}
             onChange={(e) => dispatch(setLevel1(e.value))}
           />
-          <Label htmlFor="featureTest" checked={level1 === "기능테스트"}>
+          <RadioLabel htmlFor="featureTest" checked={level1 === "기능테스트"}>
             기능테스트
-          </Label>
+          </RadioLabel>
           <DropDownList
             data={level2List}
             value={level2}
@@ -134,21 +157,27 @@ const GNB = () => {
             checked={level1 === "응답시간"}
             onChange={(e) => dispatch(setLevel1(e.value))}
           />
-          <Label htmlFor="response" checked={level1 === "응답시간"}>
+          <RadioLabel htmlFor="response" checked={level1 === "응답시간"}>
             응답시간
-          </Label>
+          </RadioLabel>
         </li>
         <li className="search">
-          <DateRangePicker
+          <label htmlFor="startDate">검색시작일</label>
+          <DatePicker
+            id="startDate"
+            name="startDate"
+            format="yyyy-MM-dd"
+            min={getRangeMinDate()}
+            value={new Date(searchDate.startDate)}
+            onChange={handleChange}
+          />
+          <label htmlFor="endDate">검색종료일</label>
+          <DatePicker
+            id="endDate"
+            name="endDate"
+            format="yyyy-MM-dd"
             max={new Date()}
-            startDateInput={() => (
-              <CustomStartDateInput value={selectedStartDate} />
-            )}
-            endDateInput={() => <CustomEndDateInput value={selectedEndDate} />}
-            defaultValue={{
-              start: new Date(selectedStartDate),
-              end: new Date(selectedEndDate),
-            }}
+            value={new Date(searchDate.endDate)}
             onChange={handleChange}
           />
           <Button icon="search" look="flat" onClick={onClick} />

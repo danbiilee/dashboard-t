@@ -45,7 +45,7 @@ const getDateRangeList = (start, end) => {
     result.push(curr);
     curr = convertDateFormat(getAddedDay(curr));
   }
-  return result.reverse();
+  return result;
 };
 
 const LNB = () => {
@@ -53,7 +53,7 @@ const LNB = () => {
   const dateRangeList = getDateRangeList(startDate, endDate);
   const [selectedInputs, setSelectedInputs] = useState({
     state: "fail",
-    date: dateRangeList[0],
+    date: dateRangeList[dateRangeList.length - 1],
     device: devices[0],
   });
 
@@ -61,7 +61,7 @@ const LNB = () => {
     // 비동기 setState -> 변경된 시작일, 종료일에 맞는 dateRangeList 값으로 바꿔줌
     setSelectedInputs((prevState) => ({
       ...prevState,
-      date: dateRangeList[0],
+      date: dateRangeList[dateRangeList.length - 1],
     }));
   }, [startDate, endDate]);
 

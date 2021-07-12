@@ -20,12 +20,15 @@
 }
 
 // DatePicker
+.k-daterangepicker-wrap {
+  display: flex !important;
+}
 .k-datepicker {
   width: 24rem;
   height: 48px;
+  margin-right: 2rem;
   border: 1px solid #abb3c1;
   background-color: #fff;
-  margin-right: 2rem;
   .k-picker-wrap {
     border-width: 0;
     .k-dateinput {
@@ -46,6 +49,7 @@
     color: #24252b;
   }
 }
+
 .k-calendar-header .k-button.k-flat,
 .k-calendar-nav .k-button.k-flat {
   width: fit-content;
