@@ -17,24 +17,22 @@ export const gnbSlice = createSlice({
   name: "gnb",
   initialState,
   reducers: {
-    setLevel1: (state, action) => {
-      state.level1 = action.payload;
-      // 초기화
-      state.level2 = initialState.level2;
+    setLevel1: (state, { payload }) => {
+      state.level1 = payload;
+      state.level2 = initialState.level2; // 초기화
       state.level3 = initialState.level3;
     },
-    setLevel2: (state, action) => {
-      state.level2 = action.payload;
-      // 초기화
-      state.level3 = treemenu[action.payload].find(
+    setLevel2: (state, { payload }) => {
+      state.level2 = payload;
+      state.level3 = treemenu[payload].find(
         (menu) => menu.active && menu.order === 1
-      );
+      ); // 초기화
     },
-    setLevel3: (state, action) => {
-      state.level3 = action.payload;
+    setLevel3: (state, { payload }) => {
+      state.level3 = payload;
     },
-    setDateRange: (state, action) => {
-      const { start, end } = action.payload;
+    setDateRange: (state, { payload }) => {
+      const { start, end } = payload;
       state.startDate = start;
       state.endDate = end;
     },

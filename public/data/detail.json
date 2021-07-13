@@ -1,0 +1,58 @@
+{
+  "data": [
+    {
+      "ID": 77,
+      "AMORE_TSQUARE_ID": 75,
+      "LANGUAGE": "kr/ko",
+      "LOG": "01 Passed",
+      "NAME": "test_01_ko",
+      "STATUS": "Pass",
+      "TITLE": "Main"
+    },
+    {
+      "ID": 78,
+      "AMORE_TSQUARE_ID": 75,
+      "LANGUAGE": "kr/ko",
+      "LOG": "02 Passed",
+      "NAME": "test_02_ko",
+      "STATUS": "Pass",
+      "TITLE": "Main_Product"
+    },
+    {
+      "ID": 79,
+      "AMORE_TSQUARE_ID": 75,
+      "LANGUAGE": "kr/ko",
+      "LOG": "03 Passed",
+      "NAME": "test_03_ko",
+      "STATUS": "Pass",
+      "TITLE": "Main_BestSeller"
+    },
+    {
+      "ID": 80,
+      "AMORE_TSQUARE_ID": 75,
+      "LANGUAGE": "kr/ko",
+      "LOG": "04 Passed",
+      "NAME": "test_04_ko",
+      "STATUS": "Pass",
+      "TITLE": "Main_Footer"
+    },
+    {
+      "ID": 82,
+      "AMORE_TSQUARE_ID": 81,
+      "LANGUAGE": "kr/ko",
+      "LOG": "1 Passed",
+      "NAME": "test_01",
+      "STATUS": "Pass",
+      "TITLE": "ID_Login"
+    },
+    {
+      "ID": 83,
+      "AMORE_TSQUARE_ID": 81,
+      "LANGUAGE": "kr/ko",
+      "LOG": "2 Passed",
+      "NAME": "test_02",
+      "STATUS": "Pass",
+      "TITLE": "Barcode"
+    }
+  ]
+}

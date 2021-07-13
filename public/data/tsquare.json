@@ -1,0 +1,32 @@
+{
+  "data": [
+    {
+      "ID": 75,
+      "TYPE": "BRAND",
+      "APPLICATION_NAME": "Sulwhasoo",
+      "APPLICATION_VERSION": "Chrome 87.0.4280.101",
+      "PLATFORM_VERSION": "Android 7.1.1",
+      "DEVICE_NAME": "Alpha One",
+      "DEVICE_RESOLUTION": "2560 x 1440",
+      "START_TIME": "21/06/17",
+      "TOTAL": 15,
+      "FAIL": 0,
+      "PASS": 15,
+      "PASS_RATE": "100.0%"
+    },
+    {
+      "ID": 81,
+      "TYPE": "APPLICATION",
+      "APPLICATION_NAME": "BeautyPoint",
+      "APPLICATION_VERSION": "4.4",
+      "PLATFORM_VERSION": "Android 7.1.1",
+      "DEVICE_NAME": "Alpha One",
+      "DEVICE_RESOLUTION": "2560 x 1440",
+      "START_TIME": "20/12/16",
+      "TOTAL": 83,
+      "FAIL": 1,
+      "PASS": 82,
+      "PASS_RATE": "98.0%"
+    }
+  ]
+}

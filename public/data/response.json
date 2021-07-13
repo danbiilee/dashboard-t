@@ -1,0 +1,202 @@
+{
+  "data": [
+    {
+      "ID": 22,
+      "BRAND_NAME": "BeautyPoint",
+      "APPLICATION_VERSION": "4.4.16",
+      "PLATFORM_VERSION": "iOS 14.1",
+      "DEVICE_NAME": "iPhoneXR",
+      "START_TIME": "21/06/04",
+      "MAIN_TIME": 0.53,
+      "LOGIN_TIME": 1.14,
+      "SEARCH_TIME": 2.7
+    },
+    {
+      "ID": 23,
+      "BRAND_NAME": "아리따움",
+      "APPLICATION_VERSION": "3.3.7",
+      "PLATFORM_VERSION": "Android 10.0",
+      "DEVICE_NAME": "Galaxy S10",
+      "START_TIME": "21/06/17",
+      "MAIN_TIME": 0.864222645759582,
+      "LOGIN_TIME": 1.26351568698883,
+      "SEARCH_TIME": 0.794616999626159
+    },
+    {
+      "ID": 25,
+      "BRAND_NAME": "아모레퍼시픽몰",
+      "APPLICATION_VERSION": "5.3.0",
+      "PLATFORM_VERSION": "Android 10.0",
+      "DEVICE_NAME": "Galaxy S10",
+      "START_TIME": "21/06/17",
+      "MAIN_TIME": 0.668368768692016,
+      "LOGIN_TIME": 1.11194380760192,
+      "SEARCH_TIME": 1.20841465314229
+    },
+    {
+      "ID": 26,
+      "BRAND_NAME": "에뛰드",
+      "APPLICATION_VERSION": "3.2.8",
+      "PLATFORM_VERSION": "Android 10.0",
+      "DEVICE_NAME": "Galaxy S10",
+      "START_TIME": "21/06/17",
+      "MAIN_TIME": 1.06509929233127,
+      "LOGIN_TIME": 1.18610561688741,
+      "SEARCH_TIME": 1.24065924167633
+    },
+    {
+      "ID": 41,
+      "BRAND_NAME": "에스쁘아",
+      "APPLICATION_VERSION": "Chrome 88.0.4324.181",
+      "PLATFORM_VERSION": "Android 10.0",
+      "DEVICE_NAME": "Galaxy S10",
+      "START_TIME": "21/06/17",
+      "MAIN_TIME": 1.06509929233127,
+      "LOGIN_TIME": 1.18610561688741,
+      "SEARCH_TIME": 1.24065924167633
+    },
+    {
+      "ID": 61,
+      "BRAND_NAME": "에스트라",
+      "APPLICATION_VERSION": "Chrome 88.0.4324.181",
+      "PLATFORM_VERSION": "Android 10.0",
+      "DEVICE_NAME": "Galaxy S10",
+      "START_TIME": "21/06/17",
+      "MAIN_TIME": 1.5012802362442,
+      "LOGIN_TIME": 2.67518289883931,
+      "SEARCH_TIME": 1.14909813457065
+    },
+    {
+      "ID": 62,
+      "BRAND_NAME": "오설록",
+      "APPLICATION_VERSION": "Chrome 88.0.4324.181",
+      "PLATFORM_VERSION": "Android 10.0",
+      "DEVICE_NAME": "Galaxy S10",
+      "START_TIME": "21/06/17",
+      "MAIN_TIME": 0.859536420504252,
+      "LOGIN_TIME": 1.971853017807,
+      "SEARCH_TIME": 1.68089051246643
+    },
+    {
+      "ID": 63,
+      "BRAND_NAME": "이니스프리",
+      "APPLICATION_VERSION": "Chrome 88.0.4324.181",
+      "PLATFORM_VERSION": "Android 10.0",
+      "DEVICE_NAME": "Galaxy S10",
+      "START_TIME": "21/06/17",
+      "MAIN_TIME": 1.318173558712,
+      "LOGIN_TIME": 2.61393013000488,
+      "SEARCH_TIME": 1.54720627069473
+    },
+    {
+      "ID": 64,
+      "BRAND_NAME": "카운셀러",
+      "APPLICATION_VERSION": "Chrome 88.0.4324.181",
+      "PLATFORM_VERSION": "Android 10.0",
+      "DEVICE_NAME": "Galaxy S10",
+      "START_TIME": "21/06/17",
+      "MAIN_TIME": 0.430714170138041,
+      "LOGIN_TIME": 1.1491340637207,
+      "SEARCH_TIME": 0.825697908401489
+    },
+    {
+      "ID": 65,
+      "BRAND_NAME": "컬러테일러",
+      "APPLICATION_VERSION": "Chrome 88.0.4324.181",
+      "PLATFORM_VERSION": "Android 10.0",
+      "DEVICE_NAME": "Galaxy S10",
+      "START_TIME": "21/06/17",
+      "MAIN_TIME": 0.198305010795593,
+      "LOGIN_TIME": 1.1695232629776,
+      "SEARCH_TIME": 2.58043603897094
+    },
+    {
+      "ID": 66,
+      "BRAND_NAME": "쿠팡",
+      "APPLICATION_VERSION": "Chrome 88.0.4324.181",
+      "PLATFORM_VERSION": "Android 10.0",
+      "DEVICE_NAME": "Galaxy S10",
+      "START_TIME": "21/06/17",
+      "MAIN_TIME": 1.068305010795593,
+      "LOGIN_TIME": 1.3695232629776,
+      "SEARCH_TIME": 1.58043603897094
+    },
+    {
+      "ID": 67,
+      "BRAND_NAME": "큐브미",
+      "APPLICATION_VERSION": "Chrome 88.0.4324.181",
+      "PLATFORM_VERSION": "Android 10.0",
+      "DEVICE_NAME": "Galaxy S10",
+      "START_TIME": "21/06/17",
+      "MAIN_TIME": 1.2355010795593,
+      "LOGIN_TIME": 1.2695232629776,
+      "SEARCH_TIME": 2.18043603897094
+    },
+    {
+      "ID": 68,
+      "BRAND_NAME": "화해",
+      "APPLICATION_VERSION": "5.12.0",
+      "PLATFORM_VERSION": "Android 10.0",
+      "DEVICE_NAME": "Galaxy S10",
+      "START_TIME": "21/06/17",
+      "MAIN_TIME": 0.2355010795593,
+      "LOGIN_TIME": 0.2695232629776,
+      "SEARCH_TIME": 0.18043603897094
+    },
+    {
+      "ID": 69,
+      "BRAND_NAME": "뷰티엔젤",
+      "APPLICATION_VERSION": "2.5.6",
+      "PLATFORM_VERSION": "iOS 14.0.1",
+      "DEVICE_NAME": "iPhoneXR",
+      "START_TIME": "21/06/17",
+      "MAIN_TIME": 0.956546142366197,
+      "LOGIN_TIME": 0.490169191360473,
+      "SEARCH_TIME": -1
+    },
+    {
+      "ID": 70,
+      "BRAND_NAME": "뷰티포인트",
+      "APPLICATION_VERSION": "2.5.6",
+      "PLATFORM_VERSION": "iOS 14.0.1",
+      "DEVICE_NAME": "iPhoneXR",
+      "START_TIME": "21/06/17",
+      "MAIN_TIME": 1.28038567966885,
+      "LOGIN_TIME": 1.840169191360473,
+      "SEARCH_TIME": 2.64713144302368
+    },
+    {
+      "ID": 71,
+      "BRAND_NAME": "오설록",
+      "APPLICATION_VERSION": "1.0.2",
+      "PLATFORM_VERSION": "iOS 14.0.1",
+      "DEVICE_NAME": "iPhoneXR",
+      "START_TIME": "21/06/17",
+      "MAIN_TIME": 1.0441120147705,
+      "LOGIN_TIME": 0.758116960525512,
+      "SEARCH_TIME": 1.28477511405944
+    },
+    {
+      "ID": 72,
+      "BRAND_NAME": "라네즈",
+      "APPLICATION_VERSION": "Chrome 88.0.4324.181",
+      "PLATFORM_VERSION": "Android 10.0",
+      "DEVICE_NAME": "Galaxy S10",
+      "START_TIME": "21/06/17",
+      "MAIN_TIME": 0.28038567966885,
+      "LOGIN_TIME": 1.540169191360473,
+      "SEARCH_TIME": 1.24713144302368
+    },
+    {
+      "ID": 73,
+      "BRAND_NAME": "설화수",
+      "APPLICATION_VERSION": "Chrome 88.0.4324.181",
+      "PLATFORM_VERSION": "Android 10.0",
+      "DEVICE_NAME": "Galaxy S10",
+      "START_TIME": "21/06/17",
+      "MAIN_TIME": 1.07038567966885,
+      "LOGIN_TIME": 1.230169191360473,
+      "SEARCH_TIME": 0.94713144302368
+    }
+  ]
+}

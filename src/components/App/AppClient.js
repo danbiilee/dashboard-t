@@ -8,6 +8,10 @@ import Main from "../../containers/Main";
 import Mall from "../../pages/Mall";
 import Brand from "../../pages/Brand";
 import Response from "../../pages/Response";
+import { useDispatch } from "react-redux";
+import { fetchResponses } from "../../redux/responseSlice";
+import { fetchFeatures } from "../../redux/featureSlice";
+import { globalConfig } from "../../../config/global.config";
 
 const Wrapper = styled.div`
   display: flex;
@@ -21,11 +25,21 @@ const Wrapper = styled.div`
 const AppClient = () => {
   const history = useHistory();
   const { pathname } = useLocation();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    // 페이지 새로고침 됐을 때(첫 마운트) url 초기화
-    pathname !== "/" && history.push("/");
-  }, []);
+    pathname !== "/" && history.push("/"); // url 초기화
+
+    dispatch(fetchResponses());
+    dispatch(fetchFeatures());
+
+    // const id = setInterval(() => {
+    //   dispatch(fetchResponses());
+    //   dispatch(fetchFeatures());
+    // }, globalConfig.setInterval * 1000);
+
+    // return () => clearInterval(id);
+  }, [dispatch]);
 
   return (
     <Wrapper>
