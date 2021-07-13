@@ -149,13 +149,6 @@
 }
 
 // LNB - Button
-.details .k-dropdown {
-  height: 3rem;
-  .k-input {
-    padding: 0 0.7rem;
-    line-height: 3rem;
-  }
-}
 .details .k-button.k-flat {
   height: 40px;
   font-family: inherit;
@@ -189,34 +182,18 @@
   }
   .k-datepicker {
     width: 16rem;
-    height: inherit;
     margin-right: 1.3rem;
     .k-picker-wrap .k-dateinput {
-      margin-top: inherit;
       font-size: 1.4rem;
     }
-    .k-select {
-      padding: 0.7rem;
-      .k-icon {
-        font-size: inherit;
-      }
+    .k-select .k-icon {
+      font-size: 1.8rem;
     }
   }
   .k-dropdown {
     width: 19rem;
-    height: inherit;
     margin-right: 1.3rem;
     font-size: 1.4rem;
-    .k-dropdown-wrap .k-select {
-      padding: 0.7rem;
-      .k-icon {
-        font-size: inherit;
-      }
-    }
-  }
-  .k-input {
-    padding: 0.7rem;
-    line-height: inherit;
   }
   .k-list {
     font-size: 1.3rem;
@@ -224,26 +201,11 @@
       padding: 0.7rem;
     }
   }
-  .k-button {
-    &.k-flat {
-      width: 5rem;
-      height: 3rem;
-    }
-    .k-icon {
-      font-size: 1.4rem;
-    }
-  }
   // LNB
   .details .k-button.k-flat {
-    width: 6rem;
-    height: inherit;
     font-size: 1.3rem;
   }
-  .excel .k-button.k-flat {
-    height: inherit;
-    padding: 0.5rem;
-    svg {
-      font-size: 2.2rem;
-    }
+  .excel .k-button.k-flat svg {
+    font-size: 2.5rem;
   }
 }

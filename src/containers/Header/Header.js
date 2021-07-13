@@ -13,12 +13,12 @@ const Wrapper = styled.header`
     top: 0;
     left: ${({ theme }) => theme.size.baseSpace};
     color: #2f56a7;
-    font-size: 1.9rem;
+    font-size: 2.3rem;
     line-height: 70px;
   }
   .title {
     color: #202c5c;
-    font-size: 2.5rem;
+    font-size: 2.8rem;
     line-height: 70px;
   }
 `;
