@@ -13,11 +13,7 @@ import { DropDownList } from "@progress/kendo-react-dropdowns";
 import { DatePicker } from "@progress/kendo-react-dateinputs";
 import { Button } from "@progress/kendo-react-buttons";
 import { treemenu } from "../../../config/nav.config";
-import {
-  convertDateFormat,
-  getRangeMinDate,
-  filterDropDownList,
-} from "../../utils";
+import { convertDateFormat, filterDropDownList } from "../../utils";
 
 const level2List = Object.keys(treemenu); // 첫번째 드롭다운 리스트
 
