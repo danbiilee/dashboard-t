@@ -113,6 +113,14 @@ const GNB = () => {
   };
 
   const onClick = useCallback(() => {
+    const ms = new Date(searchDate.endDate) - new Date(searchDate.startDate);
+    const term = ms / 1000 / 60 / 60 / 24 + 1;
+    console.log(term);
+    if (term > 5) {
+      // 📌📌📌📌📌📌5일 초과 공휴일 검사 필요📌📌📌📌📌📌📌
+      return;
+    }
+
     dispatch(
       setDateRange({
         start: searchDate.startDate,
@@ -175,7 +183,6 @@ const GNB = () => {
             id="startDate"
             name="startDate"
             format="yyyy-MM-dd"
-            min={getRangeMinDate()}
             value={new Date(searchDate.startDate)}
             onChange={handleChange}
           />

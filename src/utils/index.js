@@ -24,19 +24,13 @@ export const convertDateFormat = (d) => {
 export const getStartDate = () => {
   const d = new Date();
   const dayOfMonth = d.getDate();
-  d.setDate(dayOfMonth - 7);
+  d.setDate(dayOfMonth - 4);
   return d;
 };
 
 export const getAddedDay = (s) => {
   const d = new Date(s);
   d.setDate(d.getDate() + 1);
-  return d;
-};
-
-export const getRangeMinDate = () => {
-  const d = new Date();
-  d.setMonth(d.getMonth() - 3);
   return d;
 };
 
