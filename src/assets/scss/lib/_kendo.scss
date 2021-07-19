@@ -123,13 +123,15 @@
     background-color: #2f56a7 !important;
     color: #fff;
     transition: all 0.2s ease-out;
-    &:hover {
+    &:hover,
+    &:active {
       background-color: #153b8b !important;
       color: #fff;
     }
   }
   .k-icon {
     font-size: 1.8rem;
+    color: #fff;
   }
 }
 .k-icon {
@@ -153,6 +155,12 @@
   height: 40px;
   font-family: inherit;
   font-weight: bold;
+  color: #fff;
+  &:hover,
+  &:active {
+    background-color: #153b8b !important;
+    color: #fff;
+  }
 }
 
 // LNB - Excel Button

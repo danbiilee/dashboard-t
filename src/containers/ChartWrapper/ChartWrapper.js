@@ -4,26 +4,28 @@ import styled, { css } from "styled-components";
 import { useLocation } from "react-router-dom";
 
 const Wrapper = styled.div`
-  ${(props) =>
-    props.type === "flex"
+  ${({ type }) =>
+    type === "flex"
       ? css`
-          flex: 1 0 40rem;
-          display: flex;
           margin-bottom: ${({ theme }) => theme.size.componentSpace};
         `
       : css`
-          flex: 1;
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          grid-auto-rows: 33.3%;
           padding: ${({ theme }) => theme.size.baseSpace};
         `}
+  ${({ isEmpty }) =>
+    isEmpty &&
+    css`
+      flex: 5;
+    `}
 `;
 
-const ChartWrapper = ({ children }) => {
+const ChartWrapper = ({ isEmpty, children }) => {
   const { pathname } = useLocation();
   return (
-    <Wrapper type={pathname === "/response" ? "grid" : "flex"}>
+    <Wrapper
+      type={pathname === "/response" ? "grid" : "flex"}
+      isEmpty={isEmpty}
+    >
       {children}
     </Wrapper>
   );
@@ -31,6 +33,7 @@ const ChartWrapper = ({ children }) => {
 
 ChartWrapper.propTypes = {
   children: PropTypes.node,
+  isEmpty: PropTypes.bool,
 };
 
 export default ChartWrapper;
