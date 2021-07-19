@@ -1,14 +1,14 @@
 import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import logger from "redux-logger";
-import gnbReducer from "./gnbSlice";
-import responseReducer from "./responseSlice";
-import featureReducer from "./featureSlice";
+import controlReducer from "./controlSlice";
+import responseTimeReducer from "./responseTimeSlice";
+import functionTestReducer from "./functionTestSlice";
 
 export const store = configureStore({
   reducer: {
-    gnb: gnbReducer,
-    response: responseReducer,
-    feature: featureReducer,
+    control: controlReducer,
+    responseTime: responseTimeReducer,
+    functionTest: functionTestReducer,
   },
   middleware: [...getDefaultMiddleware(), logger],
 });
