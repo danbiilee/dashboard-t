@@ -14,11 +14,11 @@ export const callAPI = async (url) => {
   return response;
 };
 
-export const convertDateFormat = (d) => {
+export const convertDateFormat = (d, flag) => {
   const year = d.getFullYear();
   const mm = ("0" + (d.getMonth() + 1)).slice(-2);
   const dd = ("0" + d.getDate()).slice(-2);
-  return `${year}-${mm}-${dd}`;
+  return flag ? `${mm}-${dd}` : `${year}-${mm}-${dd}`;
 };
 
 export const getStartDate = () => {
@@ -28,12 +28,37 @@ export const getStartDate = () => {
   return d;
 };
 
-export const getAddedDay = (s) => {
+export const getStartMinDate = () => {
+  const d = new Date();
+  const dayOfMonth = d.getDate();
+  d.setDate(dayOfMonth - 13);
+  return d;
+};
+
+const getAddedDay = (s) => {
   const d = new Date(s);
   d.setDate(d.getDate() + 1);
   return d;
 };
 
-export const filterDropDownList = (list) => {
-  return list.filter((item) => item.active).sort((a, b) => a.order - b.order);
+export const getDateList = (start, end) => {
+  const result = [];
+  let curr = start;
+  while (curr <= end) {
+    result.push(curr);
+    curr = convertDateFormat(getAddedDay(curr));
+  }
+  return result;
+};
+
+export const getListConvertedKey = (list) => {
+  const result = [];
+  for (let item of list) {
+    const obj = {};
+    for (let key in item) {
+      obj[key.toUpperCase()] = item[key];
+    }
+    result.push(obj);
+  }
+  return result;
 };

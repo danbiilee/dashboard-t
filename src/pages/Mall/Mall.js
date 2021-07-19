@@ -1,12 +1,17 @@
-/* eslint-disable no-unused-vars */
-import React from "react";
-import styled from "styled-components";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
+import styled, { css } from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
 import LNB from "../../components/LNB";
 import Details from "../../components/Details";
 import ChartWrapper from "../../containers/ChartWrapper";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
+import { fetchFunctionTests } from "../../redux/functionTestSlice";
+import { setValidList } from "../../redux/controlSlice";
+import Indicator from "../../components/Indicator";
+import UserService from "../../service/UserService";
+import { convertDateFormat } from "../../utils";
 
 const Wrapper = styled.div`
   flex: 1;
@@ -18,197 +23,167 @@ const Wrapper = styled.div`
 
 const Section = styled.section`
   flex: 1;
-  display: flex;
-  flex-direction: column;
+  height: 100%;
+  ${({ isEmpty }) =>
+    isEmpty &&
+    css`
+      display: flex;
+      flex-direction: column;
+      .chart {
+        flex: 1;
+      }
+    `}
   .title {
     margin-bottom: ${({ theme }) => theme.size.componentSpace};
     font-size: 2rem;
     text-align: center;
   }
   .chart {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     border: 1px solid #cbced5;
     background-color: #fff;
-    overflow: hidden;
   }
 `;
 
-const Mall = () => {
-  const { startDate, endDate } = useSelector((state) => state.gnb);
-  const pass = [
-    {
-      name: "Galaxy A8",
-      data: [
-        [Date.parse("2021-07-03"), 101],
-        [Date.parse("2021-07-04"), 98],
-        [Date.parse("2021-07-05"), 72],
-        [Date.parse("2021-07-06"), 85],
-        [Date.parse("2021-07-07"), 99],
-        [Date.parse("2021-07-08"), 105],
-      ],
-    },
-    {
-      name: "Galaxy Note9",
-      data: [
-        [Date.parse("2021-07-03"), 118],
-        [Date.parse("2021-07-04"), 73],
-        [Date.parse("2021-07-05"), 88],
-        [Date.parse("2021-07-06"), 99],
-        [Date.parse("2021-07-07"), 101],
-        [Date.parse("2021-07-08"), 107],
-      ],
-    },
-    {
-      name: "Galaxy Note10",
-      data: [
-        [Date.parse("2021-07-03"), 87],
-        [Date.parse("2021-07-04"), 90],
-        [Date.parse("2021-07-05"), 88],
-        [Date.parse("2021-07-06"), 78],
-        [Date.parse("2021-07-07"), 95],
-        [Date.parse("2021-07-08"), 98],
-      ],
-    },
-  ];
-  const fail = [
-    {
-      name: "Galaxy A8",
-      data: [
-        [Date.parse("2021-07-03"), 69],
-        [Date.parse("2021-07-04"), 63],
-        [Date.parse("2021-07-05"), 77],
-        [Date.parse("2021-07-06"), 80],
-        [Date.parse("2021-07-07"), 72],
-        [Date.parse("2021-07-08"), 49],
-      ],
-    },
-    {
-      name: "Galaxy Note9",
-      data: [
-        [Date.parse("2021-07-03"), 59],
-        [Date.parse("2021-07-04"), 65],
-        [Date.parse("2021-07-05"), 67],
-        [Date.parse("2021-07-06"), 61],
-        [Date.parse("2021-07-07"), 56],
-        [Date.parse("2021-07-08"), 48],
-      ],
-    },
-    {
-      name: "Galaxy Note10",
-      data: [
-        [Date.parse("2021-07-03"), 43],
-        [Date.parse("2021-07-04"), 55],
-        [Date.parse("2021-07-05"), 51],
-        [Date.parse("2021-07-06"), 57],
-        [Date.parse("2021-07-07"), 62],
-        [Date.parse("2021-07-08"), 67],
-      ],
-    },
-  ];
+const Mall = ({ userService }) => {
+  const dispatch = useDispatch();
+  const {
+    chart: { isLoading, list: chartList, isError },
+  } = useSelector((state) => state.functionTest);
+  const {
+    inputs: { level2, level3 },
+    validList: { dates },
+  } = useSelector((state) => state.control);
 
+  const [series, setSeries] = useState([]);
+  // 📌📌📌 pass/fail끼리 묶고 싶을 때(레전드)
+  // const [series, setSeries] = useState({
+  //   pass: [],
+  //   fail: [],
+  // });
+  const { INIT_OPTIONS } = window.CONFIG_CHART;
+  const categories = dates.map((date) => Date.parse(date));
   const options = {
-    chart: {
-      type: "line",
-      plotBorderWidth: 1,
-    },
-    title: {
-      text: undefined,
-    },
-    yAxis: {
-      title: {
-        text: undefined,
-      },
-      min: 0,
-    },
+    ...INIT_OPTIONS,
     xAxis: {
-      type: "datetime",
+      ...INIT_OPTIONS.xAxis,
       labels: {
-        format: "{value:%m-%d}",
-      },
-      min: Date.parse(startDate),
-      max: Date.parse(endDate),
-    },
-    tooltip: {
-      // shared: true,
-    },
-    plotOptions: {
-      dashStyle: "shortDash",
-    },
-    series: [
-      {
-        id: "S8+",
-        name: "Galaxy S8+",
-        data: [
-          [Date.parse("2021-07-03"), 118],
-          [Date.parse("2021-07-04"), 122],
-          [Date.parse("2021-07-05"), 110],
-          [Date.parse("2021-07-06"), 90],
-          [Date.parse("2021-07-07"), 80],
-          [Date.parse("2021-07-08"), 95],
-        ],
-      },
-      {
-        name: "Galaxy S8+(Fail)",
-        data: [
-          [Date.parse("2021-07-03"), 75],
-          [Date.parse("2021-07-04"), 49],
-          [Date.parse("2021-07-05"), 66],
-          [Date.parse("2021-07-06"), 57],
-          [Date.parse("2021-07-07"), 33],
-          [Date.parse("2021-07-08"), 30],
-        ],
-        linkedTo: "S8+",
-        marker: {
-          enabled: false,
+        ...INIT_OPTIONS.xAxis.labels,
+        formatter: function () {
+          return convertDateFormat(new Date(categories[this.value]), true);
         },
       },
-      {
-        id: "S105G",
-        name: "Galaxy S105G",
-        data: [
-          [Date.parse("2021-07-03"), 110],
-          [Date.parse("2021-07-04"), 115],
-          [Date.parse("2021-07-05"), 80],
-          [Date.parse("2021-07-06"), 100],
-          [Date.parse("2021-07-07"), 90],
-          [Date.parse("2021-07-08"), 93],
-        ],
-      },
-      {
-        name: "Galaxy S105G(Fail)",
-        data: [
-          [Date.parse("2021-07-03"), 80],
-          [Date.parse("2021-07-04"), 76],
-          [Date.parse("2021-07-05"), 65],
-          [Date.parse("2021-07-06"), 68],
-          [Date.parse("2021-07-07"), 72],
-          [Date.parse("2021-07-08"), 59],
-        ],
-        linkedTo: "S105G",
-        marker: {
-          enabled: false,
-        },
-      },
-    ],
+    },
+    series,
+    // 📌📌📌📌📌📌 pass/fail끼리 묶고 싶을 때(레전드)
+    // series: [...series.pass, ...series.fail],
   };
+
+  // dispatch chart -> setValidList -> dispatch detail
+  useEffect(() => {
+    if (!chartList.length) {
+      return;
+    }
+
+    let dateList = new Set();
+    let deviceList = new Set();
+    for (let item of chartList) {
+      dateList.add(item.START_TIME);
+      deviceList.add(item.DEVICE_NAME);
+    }
+    dateList = Array.from(dateList);
+    deviceList = Array.from(deviceList);
+
+    dispatch(setValidList({ type: "dates", list: dateList.sort() }));
+    dispatch(setValidList({ type: "devices", list: deviceList.sort() }));
+
+    dispatch(
+      fetchFunctionTests({
+        flag: "detail",
+        date: dateList[dateList.length - 1], // 가장 최근 날짜
+        name: deviceList[0],
+        success: "Fail", // Default
+        type: level2.menuId,
+        application_name: level3.menuId,
+      })
+    );
+
+    // highcharts 데이터
+    const { COLORS, INIT_SERIES_OPTIONS } = window.CONFIG_CHART;
+    const seriesTmp = [];
+    // 📌📌📌 pass/fail끼리 묶고 싶을 때(레전드)
+    // const seriesTmp = {
+    //   pass: [],
+    //   fail: [],
+    // };
+    for (let i = 0; i < deviceList.length; i++) {
+      const filtered = chartList.filter(
+        (item) => item.DEVICE_NAME === deviceList[i]
+      );
+      const pass = {
+        ...INIT_SERIES_OPTIONS,
+        name: filtered[0].DEVICE_NAME,
+        color: COLORS[i],
+        marker: { ...INIT_SERIES_OPTIONS.marker, lineColor: COLORS[i] },
+      };
+      const fail = {
+        ...INIT_SERIES_OPTIONS,
+        name: `${filtered[0].DEVICE_NAME}(Fail)`,
+        color: COLORS[i],
+        marker: { ...INIT_SERIES_OPTIONS.marker, lineColor: COLORS[i] },
+        dashStyle: "shortdash",
+      };
+
+      const passData = [];
+      const failData = [];
+      for (let f of filtered) {
+        passData.push(f.PASS);
+        failData.push(f.FAIL);
+      }
+      pass.data = [...passData];
+      fail.data = [...failData];
+
+      seriesTmp.push(pass);
+      seriesTmp.push(fail);
+      // 📌📌📌 pass/fail끼리 묶고 싶을 때(레전드)
+      // seriesTmp.pass.push(pass);
+      // seriesTmp.fail.push(fail);
+    }
+
+    setSeries([...seriesTmp]);
+    // 📌📌📌 pass/fail끼리 묶고 싶을 때(레전드)
+    // setSeries({
+    //   ...series,
+    //   pass: seriesTmp.pass,
+    //   fail: seriesTmp.fail,
+    // });
+  }, [dispatch, chartList, level2, level3]);
 
   return (
     <Wrapper>
-      <ChartWrapper>
-        <Section>
-          <h3 className="title">APMALL</h3>
+      <ChartWrapper isEmpty={!series.length}>
+        <Section isEmpty={!series.length}>
+          <h3 className="title">{level3.menuValue}</h3>
           <div className="chart">
-            {/* <HighchartsReact highcharts={Highcharts} options={options} /> */}
+            {isError && <Indicator type="error" />}
+            {isLoading && <Indicator type="loading" />}
+            {!isError &&
+              !isLoading &&
+              (!chartList.length ? (
+                <Indicator type="empty" />
+              ) : (
+                <HighchartsReact highcharts={Highcharts} options={options} />
+              ))}
           </div>
         </Section>
       </ChartWrapper>
-      <LNB />
+      <LNB userService={userService} />
       <Details />
     </Wrapper>
   );
+};
+
+Mall.propTypes = {
+  userService: PropTypes.instanceOf(UserService),
 };
 
 export default Mall;

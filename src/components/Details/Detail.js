@@ -57,7 +57,7 @@ const Row = styled.div`
   }
 `;
 
-const Detail = ({ flag }) => {
+const Detail = ({ detail, flag }) => {
   const { pathname } = useLocation();
   const type = pathname === "/" ? "device" : "global";
 
@@ -68,12 +68,12 @@ const Detail = ({ flag }) => {
           <div className="icon-wrapper">
             <DetailIcon type={type} />
           </div>
-          <p>갤럭시8</p>
+          <p>{type === "device" ? detail.DEVICE_NAME : detail.LANGUAGE}</p>
         </div>
         <div className="date__wrapper">
           <p>
-            <span className="date__title">발생일시 :&nbsp;</span>2021-07-01
-            00:05:39
+            <span className="date__title">발생일시 :&nbsp;</span>
+            {detail.START_TIME}
           </p>
         </div>
       </Row>
@@ -81,19 +81,20 @@ const Detail = ({ flag }) => {
         <div className="icon-wrapper">
           <DetailIcon type="type" />
         </div>
-        <p>Non___Non___Non__</p>
+        <p>{detail.TITLE}</p>
       </Row>
       <Row>
         <div className="icon-wrapper">
           <DetailIcon type="message" />
         </div>
-        <p>상품 상세 페이지에서 비로그인 결제하기 선택 후 ~~~~</p>
+        <p>{detail.LOG}</p>
       </Row>
     </Wrapper>
   );
 };
 
 Detail.propTypes = {
+  detail: PropTypes.object,
   flag: PropTypes.bool,
 };
 

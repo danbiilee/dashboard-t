@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import PropTypes from "prop-types";
+import { useDispatch, useSelector } from "react-redux";
 import styled, { css } from "styled-components";
 import { RadioButton } from "@progress/kendo-react-inputs";
 import { DropDownList } from "@progress/kendo-react-dropdowns";
 import { Button } from "@progress/kendo-react-buttons";
 import { RiFileExcel2Fill } from "react-icons/ri";
-import {
-  getAddedDay,
-  convertDateFormat,
-  filterDropDownList,
-} from "../../utils";
-import { devices } from "../../../config/nav.config";
+import { fetchFunctionTests } from "../../redux/functionTestSlice";
+import UserService from "../../service/UserService";
 
 const Wrapper = styled.nav`
   height: 64px;
@@ -43,32 +40,27 @@ const Label = styled.label`
     `}
 `;
 
-const getDateRangeList = (start, end) => {
-  const result = [];
-  let curr = start;
-  while (curr <= end) {
-    result.push(curr);
-    curr = convertDateFormat(getAddedDay(curr));
-  }
-  return result;
-};
+const LNB = ({ userService }) => {
+  const dispatch = useDispatch();
+  const {
+    inputs: { level2, level3 },
+    validList,
+  } = useSelector((state) => state.control);
+  const { dates, devices, langs } = validList;
 
-const LNB = () => {
-  const { startDate, endDate } = useSelector((state) => state.gnb);
-  const dateRangeList = getDateRangeList(startDate, endDate);
   const [selectedInputs, setSelectedInputs] = useState({
-    state: "fail",
-    date: dateRangeList[dateRangeList.length - 1],
-    device: filterDropDownList(devices)[0],
+    state: "Fail",
+    date: dates[dates.length - 1], // 디폴트: chartList의 첫번째 데이터 기준
+    name: level2.menuId === "APPLICATION" ? devices[0] : langs[0],
   });
 
   useEffect(() => {
-    // 비동기 setState -> 변경된 시작일, 종료일에 맞는 dateRangeList 값으로 바꿔줌
-    setSelectedInputs((prevState) => ({
-      ...prevState,
-      date: dateRangeList[dateRangeList.length - 1],
-    }));
-  }, [startDate, endDate]);
+    setSelectedInputs({
+      state: "Fail",
+      date: dates[dates.length - 1],
+      name: level2.menuId === "APPLICATION" ? devices[0] : langs[0],
+    });
+  }, [dates, devices, langs, level2]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -80,6 +72,23 @@ const LNB = () => {
     setSelectedInputs({ ...selectedInputs, [name]: value });
   };
 
+  const handleFetchDetail = () => {
+    dispatch(
+      fetchFunctionTests({
+        flag: "detail",
+        date: selectedInputs.date,
+        name: selectedInputs.name,
+        success: selectedInputs.state,
+        type: level2.menuId,
+        application_name: level3.menuId,
+      })
+    );
+  };
+
+  const handleDownload = () => {
+    userService.downloadExcel(selectedInputs, { level2, level3 });
+  };
+
   return (
     <Wrapper>
       <ul className="list-wrapper">
@@ -88,48 +97,52 @@ const LNB = () => {
             <RadioButton
               id="fail"
               name="state"
-              value="fail"
-              checked={selectedInputs.state === "fail"}
+              value="Fail"
+              checked={selectedInputs.state === "Fail"}
               onChange={handleChange}
             />
-            <Label htmlFor="fail" checked={selectedInputs.state === "fail"}>
+            <Label htmlFor="fail" checked={selectedInputs.state === "Fail"}>
               Fail
             </Label>
             <RadioButton
               id="pass"
               name="state"
-              value="pass"
-              checked={selectedInputs.state === "pass"}
+              value="Pass"
+              checked={selectedInputs.state === "Pass"}
               onChange={handleChange}
             />
-            <Label htmlFor="pass" checked={selectedInputs.state === "pass"}>
+            <Label htmlFor="pass" checked={selectedInputs.state === "Pass"}>
               Pass
             </Label>
           </div>
           <DropDownList
             name="date"
-            data={dateRangeList}
+            data={dates}
             value={selectedInputs.date}
             onChange={handleChange}
           />
           <DropDownList
-            name="device"
-            data={filterDropDownList(devices)}
-            textField="menuValue"
-            dataItemKey="id"
-            value={selectedInputs.device}
+            name="name"
+            data={level2.menuId === "APPLICATION" ? devices : langs}
+            value={selectedInputs.name}
             onChange={handleChange}
           />
-          <Button look="flat">상세보기</Button>
+          <Button look="flat" onClick={handleFetchDetail}>
+            상세보기
+          </Button>
         </li>
         <li className="excel">
-          <Button look="flat">
+          <Button look="flat" onClick={handleDownload}>
             <RiFileExcel2Fill />
           </Button>
         </li>
       </ul>
     </Wrapper>
   );
+};
+
+LNB.propTypes = {
+  userService: PropTypes.instanceOf(UserService),
 };
 
 export default LNB;
