@@ -1,58 +1,72 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable no-unused-vars */
 import React, { useEffect } from "react";
-import { Route, useLocation, useHistory } from "react-router-dom";
-import "@progress/kendo-theme-material/dist/all.scss";
-import "@style/main.scss";
+import PropTypes from "prop-types";
 import styled from "styled-components";
+import { Route, useLocation, useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchFunctionTests } from "../../redux/functionTestSlice";
 import Header from "../../containers/Header";
 import Main from "../../containers/Main";
 import Mall from "../../pages/Mall";
 import Brand from "../../pages/Brand";
 import Response from "../../pages/Response";
-import { useDispatch } from "react-redux";
-import { fetchResponses } from "../../redux/responseSlice";
-import { fetchFeatures } from "../../redux/featureSlice";
-import { globalConfig } from "../../../config/global.config";
+import { getDateList } from "../../utils";
+import UserService from "../../service/UserService";
+import "@progress/kendo-theme-material/dist/all.scss";
+import "../../assets/scss/main.scss";
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
   min-width: 1320px;
   height: 100%;
   background-color: #f8f9fa;
+  background-color: yellow;
 `;
 
-const AppClient = () => {
+const AppClient = ({ userService }) => {
   const history = useHistory();
   const { pathname } = useLocation();
   const dispatch = useDispatch();
+  const {
+    inputs: { level2, level3, startDate, endDate },
+  } = useSelector((state) => state.control);
 
   useEffect(() => {
     pathname !== "/" && history.push("/"); // url 초기화
-
-    dispatch(fetchResponses());
-    dispatch(fetchFeatures());
-
-    // const id = setInterval(() => {
-    //   dispatch(fetchResponses());
-    //   dispatch(fetchFeatures());
-    // }, globalConfig.setInterval * 1000);
-
-    // return () => clearInterval(id);
-  }, [dispatch]);
+    dispatch(
+      fetchFunctionTests({
+        flag: "chart",
+        date: getDateList(startDate, endDate).join(","),
+        name: level3.menuId,
+        type: level2.menuId,
+      })
+    );
+  }, []);
 
   return (
     <Wrapper>
       <Header />
-      <Main>
-        <Route exact path="/" component={Mall} />
-        <Route path="/brand" component={Brand} />
-        <Route path="/response" component={Response} />
+      <Main userService={userService}>
+        <Route
+          exact
+          path="/"
+          render={() => <Mall userService={userService} />}
+        />
+        <Route
+          path="/brand"
+          render={() => <Brand userService={userService} />}
+        />
+        <Route
+          path="/response"
+          render={() => <Response userService={userService} />}
+        />
       </Main>
     </Wrapper>
   );
+};
+
+AppClient.propTypes = {
+  userService: PropTypes.instanceOf(UserService),
 };
 
 export default AppClient;
