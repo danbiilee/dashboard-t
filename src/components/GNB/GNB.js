@@ -8,7 +8,7 @@ import { RadioButton } from "@progress/kendo-react-inputs";
 import { DropDownList } from "@progress/kendo-react-dropdowns";
 import { DatePicker } from "@progress/kendo-react-dateinputs";
 import { Button } from "@progress/kendo-react-buttons";
-import { convertDateFormat, getStartMinDate } from "../../utils";
+import { convertDateFormat, getMinFromEndDate } from "../../utils";
 import { fetchResponseTimes } from "../../redux/responseTimeSlice";
 import { fetchFunctionTests } from "../../redux/functionTestSlice";
 import UserService from "../../service/UserService";
@@ -114,15 +114,27 @@ const GNB = ({ userService }) => {
         startDate: selectedInputs.endDate,
       });
       return;
-    } else if (
-      name === "endDate" &&
-      new Date(value) < new Date(selectedInputs.startDate)
-    ) {
-      setSelectedInputs({
-        ...selectedInputs,
-        endDate: selectedInputs.startDate,
-      });
-      return;
+    }
+    if (name === "endDate") {
+      const sDate = new Date(selectedInputs.startDate);
+      const eDate = new Date(value);
+      const diffMs = eDate.getTime() - sDate.getTime();
+      const diffDay = diffMs / (1000 * 60 * 60 * 24);
+
+      if (eDate < sDate) {
+        setSelectedInputs({
+          ...selectedInputs,
+          endDate: selectedInputs.startDate,
+        });
+        return;
+      } else if (diffDay > 30) {
+        setSelectedInputs({
+          ...selectedInputs,
+          startDate: convertDateFormat(value),
+          endDate: convertDateFormat(value),
+        });
+        return;
+      }
     }
     setSelectedInputs({
       ...selectedInputs,
@@ -130,11 +142,8 @@ const GNB = ({ userService }) => {
     });
   };
 
-  // 📌📌📌📌📌📌📌
   const onClick = useCallback(async () => {
     const { level1, level2, level3, startDate, endDate } = selectedInputs;
-    const result = await userService.checkHoliday(selectedInputs);
-
     dispatch(
       setInputs({
         level1,
@@ -145,6 +154,7 @@ const GNB = ({ userService }) => {
       })
     );
 
+    const result = await userService.checkHoliday(selectedInputs);
     if (level1 === "기능테스트") {
       dispatch(
         fetchFunctionTests({
@@ -227,7 +237,7 @@ const GNB = ({ userService }) => {
             id="startDate"
             name="startDate"
             format="yyyy-MM-dd"
-            min={getStartMinDate()}
+            min={getMinFromEndDate(selectedInputs.endDate)}
             max={new Date(selectedInputs.endDate)}
             value={new Date(selectedInputs.startDate)}
             onChange={handleDateChange}

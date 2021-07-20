@@ -24,14 +24,14 @@ export const convertDateFormat = (d, flag) => {
 export const getStartDate = () => {
   const d = new Date();
   const dayOfMonth = d.getDate();
-  d.setDate(dayOfMonth - 4);
+  d.setDate(dayOfMonth - 29);
   return d;
 };
 
-export const getStartMinDate = () => {
-  const d = new Date();
+export const getMinFromEndDate = (str) => {
+  const d = new Date(str);
   const dayOfMonth = d.getDate();
-  d.setDate(dayOfMonth - 13);
+  d.setDate(dayOfMonth - 29);
   return d;
 };
 
