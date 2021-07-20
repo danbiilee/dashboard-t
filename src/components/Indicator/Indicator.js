@@ -8,13 +8,13 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: ${({ isDetail }) => (!isDetail ? "38.2rem" : "100%")};
+  height: ${({ isFullHeight }) => (isFullHeight ? "100%" : "38.2rem")};
   padding: ${({ theme }) => theme.size.baseSpace};
   font-weight: normal;
   border: ${({ isDetail }) => (isDetail ? "1px solid #cbced5" : 0)};
 `;
 
-const Indicator = ({ type, isDetail }) => {
+const Indicator = ({ type, isDetail, isFullHeight }) => {
   const isLoading = type === "loading" ? true : false;
   let message;
   if (type === "error") {
@@ -24,7 +24,7 @@ const Indicator = ({ type, isDetail }) => {
   }
 
   return (
-    <Wrapper isDetail={isDetail}>
+    <Wrapper isDetail={isDetail} isFullHeight={isFullHeight}>
       {isLoading ? (
         <Loader type="infinite-spinner" style={{ color: "#2F56A7" }} />
       ) : (
@@ -37,6 +37,7 @@ const Indicator = ({ type, isDetail }) => {
 Indicator.propTypes = {
   type: PropTypes.string,
   isDetail: PropTypes.bool,
+  isFullHeight: PropTypes.bool,
 };
 
 export default Indicator;

@@ -15,7 +15,8 @@ const Wrapper = styled.div`
   ${({ isEmpty }) =>
     isEmpty &&
     css`
-      flex: 5;
+      display: flex;
+      flex-basis: 38.2rem;
     `}
 `;
 

@@ -80,7 +80,7 @@ const Mall = ({ userService }) => {
 
   // dispatch chart -> setValidList -> dispatch detail
   useEffect(() => {
-    if (!chartList.length) {
+    if (isLoading || isError || !chartList.length) {
       return;
     }
 
@@ -156,20 +156,20 @@ const Mall = ({ userService }) => {
     //   pass: seriesTmp.pass,
     //   fail: seriesTmp.fail,
     // });
-  }, [dispatch, chartList, level2, level3]);
+  }, [dispatch, chartList, level2, level3, isLoading, isError]);
 
   return (
     <Wrapper>
-      <ChartWrapper isEmpty={!series.length}>
-        <Section isEmpty={!series.length}>
+      <ChartWrapper isEmpty={!chartList.length}>
+        <Section isEmpty={!chartList.length}>
           <h3 className="title">{level3.menuValue}</h3>
           <div className="chart">
-            {isError && <Indicator type="error" />}
-            {isLoading && <Indicator type="loading" />}
+            {isError && <Indicator type="error" isFullHeight={true} />}
+            {isLoading && <Indicator type="loading" isFullHeight={true} />}
             {!isError &&
               !isLoading &&
               (!chartList.length ? (
-                <Indicator type="empty" />
+                <Indicator type="empty" isFullHeight={true} />
               ) : (
                 <HighchartsReact highcharts={Highcharts} options={options} />
               ))}

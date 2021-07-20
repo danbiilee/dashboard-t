@@ -99,7 +99,7 @@ const Brand = ({ userService }) => {
 
   // dispatch chart -> setValidList -> dispatch detail
   useEffect(() => {
-    if (!chartList.length || !chartList[0].APPLICATION_VERSION) {
+    if (isLoading || isError || !chartList.length) {
       return;
     }
 
@@ -190,13 +190,14 @@ const Brand = ({ userService }) => {
       chrome: seriesTmp.chrome,
       safari: seriesTmp.safari,
     }));
-  }, [dispatch, chartList, level2, level3]);
+  }, [dispatch, chartList, level2, level3, isLoading, isError]);
 
+  ///!series[key].length ? true : false
   return (
     <Wrapper>
-      <ChartWrapper isEmpty={!series.chrome.length && !series.safari.length}>
+      <ChartWrapper isEmpty={!chartList.length}>
         {Object.keys(series).map((key, index) => (
-          <Section key={index} empty={!series[key].length ? true : false}>
+          <Section key={index} empty={!chartList.length}>
             <h3 className="title">
               <div className="browser">
                 {key === "chrome" ? <FaChrome /> : <FaSafari />}
@@ -205,12 +206,12 @@ const Brand = ({ userService }) => {
               {level3.menuValue}
             </h3>
             <div className="chart">
-              {isError && <Indicator type="error" />}
-              {isLoading && <Indicator type="loading" />}
+              {isError && <Indicator type="error" isFullHeight={true} />}
+              {isLoading && <Indicator type="loading" isFullHeight={true} />}
               {!isError &&
                 !isLoading &&
                 (!series[key].length ? (
-                  <Indicator type="empty" />
+                  <Indicator type="empty" isFullHeight={true} />
                 ) : (
                   <HighchartsReact
                     highcharts={Highcharts}
