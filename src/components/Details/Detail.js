@@ -68,7 +68,7 @@ const Detail = ({ detail, flag }) => {
           <div className="icon-wrapper">
             <DetailIcon type={type} />
           </div>
-          <p>{type === "device" ? detail.DEVICE_NAME : detail.LANGUAGE}</p>
+          <p>{detail.DEVICE_NAME}</p>
         </div>
         <div className="date__wrapper">
           <p>
