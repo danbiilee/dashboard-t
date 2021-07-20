@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import ChartWrapper from "../../containers/ChartWrapper";
 import { AiFillAndroid, AiFillApple } from "react-icons/ai";
 import Highcharts from "highcharts";
@@ -67,29 +67,28 @@ const Section = styled.section`
 `;
 
 const Response = () => {
+  const dispatch = useDispatch();
   const { list, isLoading, isError } = useSelector(
     (state) => state.responseTime
   );
-  const {
-    validList: { dates },
-  } = useSelector((state) => state.control);
-  const [aosSeries, setAosSeries] = useState({
-    main: [],
-    search: [],
-    login: [],
-  });
-  const [iosSeries, setIosSeries] = useState({
-    main: [],
-    search: [],
-    login: [],
+  const [series, setSeries] = useState({
+    aos: {
+      main: [],
+      search: [],
+      login: [],
+    },
+    ios: {
+      main: [],
+      search: [],
+      login: [],
+    },
   });
   const { INIT_OPTIONS } = window.CONFIG_CHART;
-  const categories = dates.map((date) => Date.parse(date));
-  const options = {
+  const defaultOptions = {
     ...INIT_OPTIONS,
     chart: {
       ...INIT_OPTIONS.chart,
-      margin: [30, 30, 120, 60],
+      margin: [30, 30, 135, 60],
     },
     xAxis: {
       ...INIT_OPTIONS.xAxis,
@@ -98,9 +97,6 @@ const Response = () => {
         style: {
           ...INIT_OPTIONS.xAxis.labels.style,
           fontSize: "12px",
-        },
-        formatter: function () {
-          return convertDateFormat(new Date(categories[this.value]), true);
         },
       },
     },
@@ -120,17 +116,22 @@ const Response = () => {
       },
     },
   };
+  const [options, setOptions] = useState({
+    aos: defaultOptions,
+    ios: defaultOptions,
+  });
 
   useEffect(() => {
+    if (isLoading || isError) {
+      return;
+    }
+
     // highcharts 데이터
+    const { COLORS, INIT_SERIES_OPTIONS } = window.CONFIG_CHART;
     const brands = {
       aos: [],
       ios: [],
     };
-    let main = [];
-    let search = [];
-    let login = [];
-    const { COLORS, INIT_SERIES_OPTIONS } = window.CONFIG_CHART;
 
     const setBrands = (type) => {
       for (let item of list[type]) {
@@ -140,12 +141,39 @@ const Response = () => {
       }
     };
 
+    const setOptionCategories = (type) => {
+      let filterd = new Set();
+      for (let item of list[type]) {
+        filterd.add(Date.parse(item.START_TIME));
+      }
+      filterd = Array.from(filterd).sort();
+      setOptions((prevState) => ({
+        ...prevState,
+        [type]: {
+          ...prevState[type],
+          xAxis: {
+            ...prevState[type].xAxis,
+            labels: {
+              ...prevState[type].xAxis.labels,
+              categories: filterd,
+              formatter: function () {
+                return convertDateFormat(new Date(filterd[this.value]), true);
+              },
+            },
+          },
+        },
+      }));
+    };
+
     const setSeriesData = (type) => {
+      let main = [];
+      let search = [];
+      let login = [];
       for (let i = 0; i < brands[type].length; i++) {
         const filtered = list[type].filter(
           (item) => item.BRAND_NAME === brands[type][i]
         );
-        const series = {
+        const initSeries = {
           ...INIT_SERIES_OPTIONS,
           name: filtered[0].BRAND_NAME,
           color: COLORS[i],
@@ -157,40 +185,49 @@ const Response = () => {
 
         for (let f of filtered) {
           if (f.MAIN_TIME != null) {
-            mainData.push(Number(f.MAIN_TIME));
+            mainData.push(Number(Number(f.MAIN_TIME).toFixed(1)));
           }
           if (f.SEARCH_TIME != null && f.SEARCH_TIME > -1) {
-            searchData.push(Number(f.SEARCH_TIME));
+            searchData.push(Number(Number(f.SEARCH_TIME).toFixed(1)));
           }
           if (f.LOGIN_TIME != null) {
-            loginData.push(Number(f.LOGIN_TIME));
+            loginData.push(Number(Number(f.LOGIN_TIME).toFixed(1)));
           }
         }
-        series.data = mainData;
-        main.push({ ...series });
-        series.data = searchData;
-        search.push({ ...series });
-        series.data = loginData;
-        login.push({ ...series });
+
+        initSeries.data = [...mainData];
+        main.push({ ...initSeries });
+
+        if (searchData.length) {
+          initSeries.data = [...searchData];
+          search.push({ ...initSeries });
+        }
+
+        initSeries.data = [...loginData];
+        login.push({ ...initSeries });
       }
+
+      setSeries((prevState) => ({
+        ...prevState,
+        [type]: {
+          main,
+          search,
+          login,
+        },
+      }));
     };
 
     setBrands("aos");
     setBrands("ios");
-
+    setOptionCategories("aos");
+    setOptionCategories("ios");
     setSeriesData("aos");
-    setAosSeries((prevState) => ({ ...prevState, main, search, login }));
-
-    main = [];
-    search = [];
-    login = [];
     setSeriesData("ios");
-    setIosSeries((prevState) => ({ ...prevState, main, search, login }));
-  }, [list]);
+  }, [dispatch, list, isError, isLoading]);
 
   return (
     <ChartWrapper>
-      {Object.keys(aosSeries).map((key, index) => (
+      {Object.keys(series.aos).map((key, index) => (
         <Div key={index}>
           <Section>
             <h3 className="title">
@@ -207,12 +244,15 @@ const Response = () => {
               {isLoading && <Indicator type="loading" />}
               {!isError &&
                 !isLoading &&
-                (!aosSeries[key].length ? (
+                (!series.aos[key].length ? (
                   <Indicator type="empty" />
                 ) : (
                   <HighchartsReact
                     highcharts={Highcharts}
-                    options={{ ...options, series: aosSeries[key] }}
+                    options={{
+                      ...options.aos,
+                      series: series.aos[key],
+                    }}
                   />
                 ))}
             </div>
@@ -232,12 +272,15 @@ const Response = () => {
               {isLoading && <Indicator type="loading" />}
               {!isError &&
                 !isLoading &&
-                (!iosSeries[key].length ? (
+                (!series.ios[key].length ? (
                   <Indicator type="empty" />
                 ) : (
                   <HighchartsReact
                     highcharts={Highcharts}
-                    options={{ ...options, series: iosSeries[key] }}
+                    options={{
+                      ...options.ios,
+                      series: series.ios[key],
+                    }}
                   />
                 ))}
             </div>
