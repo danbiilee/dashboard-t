@@ -38,6 +38,9 @@ export const functionTestSlice = createSlice({
       const { flag } = action.meta.arg;
       state[flag].isLoading = true;
       state[flag].list = [];
+      if (flag === "chart") {
+        state.detail.list = [];
+      }
       state[flag].isError = false;
     },
     [fetchFunctionTests.fulfilled]: (state, action) => {
