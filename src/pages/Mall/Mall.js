@@ -55,11 +55,6 @@ const Mall = ({ userService }) => {
   } = useSelector((state) => state.control);
 
   const [series, setSeries] = useState([]);
-  // 📌📌📌 pass/fail끼리 묶고 싶을 때(레전드)
-  // const [series, setSeries] = useState({
-  //   pass: [],
-  //   fail: [],
-  // });
   const { INIT_OPTIONS } = window.CONFIG_CHART;
   const categories = dates.map((date) => Date.parse(date));
   const options = {
@@ -74,8 +69,6 @@ const Mall = ({ userService }) => {
       },
     },
     series,
-    // 📌📌📌📌📌📌 pass/fail끼리 묶고 싶을 때(레전드)
-    // series: [...series.pass, ...series.fail],
   };
 
   // dispatch chart -> setValidList -> dispatch detail
@@ -110,11 +103,6 @@ const Mall = ({ userService }) => {
     // highcharts 데이터
     const { COLORS, INIT_SERIES_OPTIONS } = window.CONFIG_CHART;
     const seriesTmp = [];
-    // 📌📌📌 pass/fail끼리 묶고 싶을 때(레전드)
-    // const seriesTmp = {
-    //   pass: [],
-    //   fail: [],
-    // };
     for (let i = 0; i < deviceList.length; i++) {
       const filtered = chartList.filter(
         (item) => item.DEVICE_NAME === deviceList[i]
@@ -144,18 +132,9 @@ const Mall = ({ userService }) => {
 
       seriesTmp.push(pass);
       seriesTmp.push(fail);
-      // 📌📌📌 pass/fail끼리 묶고 싶을 때(레전드)
-      // seriesTmp.pass.push(pass);
-      // seriesTmp.fail.push(fail);
     }
 
     setSeries([...seriesTmp]);
-    // 📌📌📌 pass/fail끼리 묶고 싶을 때(레전드)
-    // setSeries({
-    //   ...series,
-    //   pass: seriesTmp.pass,
-    //   fail: seriesTmp.fail,
-    // });
   }, [dispatch, chartList, level2, level3, isLoading, isError]);
 
   return (
