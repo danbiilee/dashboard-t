@@ -4,7 +4,7 @@ window.CONFIG_GLOBAL = {
   BASE_URL: {
     development: window.IS_LOCAL
       ? "http://localhost:3000/data"
-      : "http://192.168.10.60:9003/gaservice/rest/tsquare",
+      : "http://192.168.10.65:9003/gaservice/rest/tsquare",
     production: "http://192.168.10.65:9003/gaservice/rest/tsquare",
   },
   REST_URL: {
@@ -30,7 +30,7 @@ window.CONFIG_GLOBAL = {
     },
   },
   DATA_KEY: {
-    development: window.IS_LOCAL ? "data" : "metricData",
+    development: window.IS_LOCAL ? "items" : "metricData",
     production: "metricData",
   },
 };
