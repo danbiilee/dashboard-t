@@ -27,7 +27,7 @@ const Header = () => {
   return (
     <Wrapper>
       <h1 className="logo">아모레퍼시픽 QA</h1>
-      <h2 className="title">성능테스트 조회</h2>
+      <h2 className="title">기능 및 성능테스트 조회</h2>
     </Wrapper>
   );
 };
