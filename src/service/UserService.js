@@ -13,11 +13,25 @@ export default class UserService {
     });
   }
 
-  downloadExcel(inputs, levels) {
-    const { state, date, name } = inputs;
-    const { level2, level3 } = levels;
+  downloadExcel(params) {
+    const { type } = params;
     const { NODE_ENV, BASE_URL, REST_URL } = window.CONFIG_GLOBAL;
-    let url = `${BASE_URL[NODE_ENV]}/${REST_URL.excel[NODE_ENV]}?name=${name}&type=${level2.menuId}&date=${date}&success=${state}&application_name=${level3.menuId}`;
+    let url = `${BASE_URL[NODE_ENV]}/${REST_URL.excel[type][NODE_ENV]}`;
+
+    if (type === "functionTest") {
+      const {
+        data: { inputs, levels },
+      } = params;
+      const { state, date, name } = inputs;
+      const { level2, level3 } = levels;
+      url += `?name=${name}&type=${level2.menuId}&date=${date}&success=${state}&application_name=${level3.menuId}`;
+    } else {
+      const {
+        data: { dates },
+      } = params;
+      url += `?date=${dates.join(",")}`;
+    }
+
     url = url.replace(/\+/g, "%2B");
     window.location.href = url;
   }

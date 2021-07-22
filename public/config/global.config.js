@@ -25,8 +25,14 @@ window.CONFIG_GLOBAL = {
       production: "test",
     },
     excel: {
-      development: "excelDownload",
-      production: "excelDownload",
+      functionTest: {
+        development: "excelDownload",
+        production: "excelDownload",
+      },
+      responseTime: {
+        development: "responseTime/excelDownload",
+        production: "responseTime/excelDownload",
+      },
     },
   },
   DATA_KEY: {

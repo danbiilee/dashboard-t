@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import ChartWrapper from "../../containers/ChartWrapper";
 import { AiFillAndroid, AiFillApple } from "react-icons/ai";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-import { convertDateFormat } from "../../utils";
+import { convertDateFormat, getDateList } from "../../utils";
 import Indicator from "../../components/Indicator";
+import UserService from "../../service/UserService";
+import ExcelDownButton from "../../components/ExcelDownButton/ExcelDownButton";
 
 const Div = styled.div`
   margin-bottom: ${({ theme }) => theme.size.baseSpace};
@@ -61,16 +64,24 @@ const Section = styled.section`
       margin-left: 1px;
     }
   }
+  .excel {
+    position: absolute;
+    right: -8px;
+    top: -8px;
+  }
   .chart {
     flex: 1;
   }
 `;
 
-const Response = () => {
+const Response = ({ userService }) => {
   const dispatch = useDispatch();
   const { list, isLoading, isError } = useSelector(
     (state) => state.responseTime
   );
+  const {
+    inputs: { startDate, endDate },
+  } = useSelector((state) => state.control);
   const [series, setSeries] = useState({
     aos: {
       main: [],
@@ -184,14 +195,19 @@ const Response = () => {
         const loginData = [];
 
         for (let f of filtered) {
-          if (f.MAIN_TIME != null) {
-            mainData.push(Number(Number(f.MAIN_TIME).toFixed(1)));
-          }
-          if (f.SEARCH_TIME != null && f.SEARCH_TIME > -1) {
+          // null, space 제외 (불신의 주석처리)
+          // if (
+          //   (f.MAIN_TIME == null || f.MAIN_TIME === " ") &&
+          //   (f.MAIN_TIME == null || f.MAIN_TIME === " ") &&
+          //   (f.MAIN_TIME == null || f.MAIN_TIME === " ")
+          // ) {
+          //   continue;
+          // }
+
+          mainData.push(Number(Number(f.MAIN_TIME).toFixed(1)));
+          loginData.push(Number(Number(f.LOGIN_TIME).toFixed(1)));
+          if (f.SEARCH_TIME > -1) {
             searchData.push(Number(Number(f.SEARCH_TIME).toFixed(1)));
-          }
-          if (f.LOGIN_TIME != null) {
-            loginData.push(Number(Number(f.LOGIN_TIME).toFixed(1)));
           }
         }
 
@@ -238,6 +254,19 @@ const Response = () => {
                 AOS
               </div>
               {key.toUpperCase()}
+              {index === 0 && (
+                <div className="excel">
+                  <ExcelDownButton
+                    userService={userService}
+                    params={{
+                      type: "responseTime",
+                      data: {
+                        dates: getDateList(startDate, endDate),
+                      },
+                    }}
+                  />
+                </div>
+              )}
             </h3>
             <div className="chart">
               {isError && <Indicator type="error" />}
@@ -266,6 +295,19 @@ const Response = () => {
                 iOS
               </div>
               {key.toUpperCase()}
+              {index === 0 && (
+                <div className="excel">
+                  <ExcelDownButton
+                    userService={userService}
+                    params={{
+                      type: "responseTime",
+                      data: {
+                        dates: getDateList(startDate, endDate),
+                      },
+                    }}
+                  />
+                </div>
+              )}
             </h3>
             <div className="chart">
               {isError && <Indicator type="error" />}
@@ -289,6 +331,10 @@ const Response = () => {
       ))}
     </ChartWrapper>
   );
+};
+
+Response.propTypes = {
+  userService: PropTypes.instanceOf(UserService),
 };
 
 export default Response;

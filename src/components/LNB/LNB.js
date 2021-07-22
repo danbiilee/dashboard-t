@@ -5,9 +5,9 @@ import styled, { css } from "styled-components";
 import { RadioButton } from "@progress/kendo-react-inputs";
 import { DropDownList } from "@progress/kendo-react-dropdowns";
 import { Button } from "@progress/kendo-react-buttons";
-import { RiFileExcel2Fill } from "react-icons/ri";
 import { fetchFunctionTests } from "../../redux/functionTestSlice";
 import UserService from "../../service/UserService";
+import ExcelDownButton from "../ExcelDownButton/ExcelDownButton";
 
 const Wrapper = styled.nav`
   height: 64px;
@@ -85,10 +85,6 @@ const LNB = ({ userService }) => {
     );
   };
 
-  const handleDownload = () => {
-    userService.downloadExcel(selectedInputs, { level2, level3 });
-  };
-
   return (
     <Wrapper>
       <ul className="list-wrapper">
@@ -132,9 +128,16 @@ const LNB = ({ userService }) => {
           </Button>
         </li>
         <li className="excel">
-          <Button look="flat" onClick={handleDownload}>
-            <RiFileExcel2Fill />
-          </Button>
+          <ExcelDownButton
+            userService={userService}
+            params={{
+              type: "functionTest",
+              data: {
+                inputs: selectedInputs,
+                levels: { level2, level3 },
+              },
+            }}
+          />
         </li>
       </ul>
     </Wrapper>
