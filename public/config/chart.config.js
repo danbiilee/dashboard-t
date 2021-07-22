@@ -69,7 +69,24 @@ window.CONFIG_CHART = {
         fontWeight: "normal",
       },
       formatter: function () {
-        return this.points.reduce(function (s, point) {
+        const points = this.points;
+        points.sort((a, b) => b.y - a.y);
+
+        const passList = [];
+        for (let p of points) {
+          if (!p.series.name.includes("Fail")) passList.push(p.series.name);
+        }
+
+        let i = 0;
+        let bundled = [];
+        while (i < passList.length) {
+          bundled = bundled.concat(
+            points.filter((p) => p.series.name.includes(passList[i]))
+          );
+          i++;
+        }
+
+        return bundled.reduce(function (s, point) {
           return s + "<br/>" + point.series.name + ": " + point.y;
         }, "");
       },
