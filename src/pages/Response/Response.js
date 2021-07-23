@@ -245,88 +245,49 @@ const Response = ({ userService }) => {
     <ChartWrapper>
       {Object.keys(series.aos).map((key, index) => (
         <Div key={index}>
-          <Section>
-            <h3 className="title">
-              <div className="browser">
-                <span className="circle">
-                  <AiFillAndroid />
-                </span>
-                AOS
-              </div>
-              {key.toUpperCase()}
-              {index === 0 && (
-                <div className="excel">
-                  <ExcelDownButton
-                    userService={userService}
-                    params={{
-                      type: "responseTime",
-                      data: {
-                        dates: getDateList(startDate, endDate),
-                      },
-                    }}
-                  />
+          {Object.keys(series).map((os, index) => (
+            <Section key={index}>
+              <h3 className="title">
+                <div className="browser">
+                  <span className="circle">
+                    <AiFillAndroid />
+                  </span>
+                  {os.toUpperCase()}
                 </div>
-              )}
-            </h3>
-            <div className="chart">
-              {isError && <Indicator type="error" />}
-              {isLoading && <Indicator type="loading" />}
-              {!isError &&
-                !isLoading &&
-                (!series.aos[key].length ? (
-                  <Indicator type="empty" />
-                ) : (
-                  <HighchartsReact
-                    highcharts={Highcharts}
-                    options={{
-                      ...options.aos,
-                      series: series.aos[key],
-                    }}
-                  />
-                ))}
-            </div>
-          </Section>
-          <Section>
-            <h3 className="title">
-              <div className="browser ios">
-                <span className="circle">
-                  <AiFillApple />
-                </span>
-                iOS
+                {key.toUpperCase()}
+                {key === "main" && (
+                  <div className="excel">
+                    <ExcelDownButton
+                      userService={userService}
+                      params={{
+                        type: "responseTime",
+                        data: {
+                          dates: getDateList(startDate, endDate),
+                        },
+                      }}
+                    />
+                  </div>
+                )}
+              </h3>
+              <div className="chart">
+                {isError && <Indicator type="error" />}
+                {isLoading && <Indicator type="loading" />}
+                {!isError &&
+                  !isLoading &&
+                  (!series[os][key].length ? (
+                    <Indicator type="empty" />
+                  ) : (
+                    <HighchartsReact
+                      highcharts={Highcharts}
+                      options={{
+                        ...options[os],
+                        series: series[os][key],
+                      }}
+                    />
+                  ))}
               </div>
-              {key.toUpperCase()}
-              {index === 0 && (
-                <div className="excel">
-                  <ExcelDownButton
-                    userService={userService}
-                    params={{
-                      type: "responseTime",
-                      data: {
-                        dates: getDateList(startDate, endDate),
-                      },
-                    }}
-                  />
-                </div>
-              )}
-            </h3>
-            <div className="chart">
-              {isError && <Indicator type="error" />}
-              {isLoading && <Indicator type="loading" />}
-              {!isError &&
-                !isLoading &&
-                (!series.ios[key].length ? (
-                  <Indicator type="empty" />
-                ) : (
-                  <HighchartsReact
-                    highcharts={Highcharts}
-                    options={{
-                      ...options.ios,
-                      series: series.ios[key],
-                    }}
-                  />
-                ))}
-            </div>
-          </Section>
+            </Section>
+          ))}
         </Div>
       ))}
     </ChartWrapper>
