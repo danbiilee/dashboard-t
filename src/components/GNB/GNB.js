@@ -58,11 +58,6 @@ const RadioLabel = styled.label`
     `}
 `;
 
-const level2List = window.CONFIG_NAV.TREE.parent; // 첫번째 드롭다운 리스트
-const getActiveDropdownList = (list) => {
-  return list.filter((item) => item.active).sort((a, b) => a.order - b.order);
-};
-
 const GNB = ({ userService }) => {
   const history = useHistory();
   const dispatch = useDispatch();
@@ -76,31 +71,39 @@ const GNB = ({ userService }) => {
     startDate,
     endDate,
   });
-  const [level3List, setLevel3List] = useState(
-    getActiveDropdownList(
-      window.CONFIG_NAV.TREE.children[selectedInputs.level2.menuId]
-    )
-  );
 
+  // 드롭다운 리스트
+  const [level2List, setLevel2List] = useState([]);
+  const [level3List, setLevel3List] = useState([]);
+
+  // 드롭다운 리스트 초기화: level2List
   useEffect(() => {
-    // 초기화
-    const { parent, children } = window.CONFIG_NAV.TREE;
-    const level2 = parent.find((menu) => menu.active && menu.order === 1);
+    const { parent } = window.CONFIG_NAV.TREE;
+    let filtered = parent.filter((menu) => menu.active);
+
+    if (selectedInputs.level1 !== "응답시간") {
+      filtered = filtered.filter((item) => !item.isResponse);
+    } else {
+      filtered = filtered.filter((item) => item.isResponse);
+    }
+    filtered.sort((a, b) => a.order - b.order);
+
+    setLevel2List(filtered);
     setSelectedInputs((prevState) => ({
       ...prevState,
-      level2,
-      level3: children[level2.menuId].find(
-        (menu) => menu.active && menu.order === 1
-      ),
+      level2: filtered[0],
     }));
   }, [selectedInputs.level1]);
 
+  // 드롭다운 리스트 초기화: level3List
   useEffect(() => {
-    const list = getActiveDropdownList(
-      window.CONFIG_NAV.TREE.children[selectedInputs.level2.menuId]
-    );
-    setSelectedInputs((prevState) => ({ ...prevState, level3: list[0] }));
+    const { children } = window.CONFIG_NAV.TREE;
+    const list = children[selectedInputs.level2.menuId]
+      .filter((item) => item.active)
+      .sort((a, b) => a.order - b.order);
+
     setLevel3List(list);
+    setSelectedInputs((prevState) => ({ ...prevState, level3: list[0] }));
   }, [selectedInputs.level2]);
 
   const handleDateChange = (e) => {
@@ -171,7 +174,7 @@ const GNB = ({ userService }) => {
         history.push("/brand");
       }
     } else {
-      dispatch(fetchResponseTimes({ date: result }));
+      dispatch(fetchResponseTimes({ name: level3.menuId, date: result }));
       history.push("/response");
     }
   }, [selectedInputs, history, dispatch, userService]);
@@ -196,7 +199,6 @@ const GNB = ({ userService }) => {
             value={selectedInputs.level2}
             textField="menuValue"
             dataItemKey="id"
-            disabled={selectedInputs.level1 === "응답시간"}
             onChange={(e) => {
               setSelectedInputs({
                 ...selectedInputs,
@@ -209,7 +211,6 @@ const GNB = ({ userService }) => {
             value={selectedInputs.level3}
             textField="menuValue"
             dataItemKey="id"
-            disabled={selectedInputs.level1 === "응답시간"}
             onChange={(e) =>
               setSelectedInputs({
                 ...selectedInputs,

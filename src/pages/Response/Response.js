@@ -80,8 +80,10 @@ const Response = ({ userService }) => {
     (state) => state.responseTime
   );
   const {
-    inputs: { startDate, endDate },
+    inputs: { level3, startDate, endDate },
   } = useSelector((state) => state.control);
+
+  // highcharts 데이터
   const [series, setSeries] = useState({
     aos: {
       main: [],
@@ -262,6 +264,7 @@ const Response = ({ userService }) => {
                       params={{
                         type: "responseTime",
                         data: {
+                          name: level3.menuId,
                           dates: getDateList(startDate, endDate),
                         },
                       }}

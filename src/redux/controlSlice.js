@@ -4,9 +4,9 @@ import { getStartDate, convertDateFormat } from "../utils";
 const initialState = {
   inputs: {
     level1: "기능테스트",
-    level2: window.CONFIG_NAV.TREE.parent.find(
-      (menu) => menu.active && menu.order === 1
-    ),
+    level2: window.CONFIG_NAV.TREE.parent
+      .filter((menu) => !menu.isResponse && menu.active)
+      .sort((a, b) => a.order - b.order)[0],
     level3: undefined,
     startDate: convertDateFormat(getStartDate()),
     endDate: convertDateFormat(new Date()),

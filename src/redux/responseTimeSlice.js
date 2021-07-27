@@ -12,9 +12,12 @@ const initialState = {
 
 export const fetchResponseTimes = createAsyncThunk(
   "response/fetchResponseTimes",
-  async ({ date }) => {
+  async ({ name, date }) => {
     const { NODE_ENV, BASE_URL, REST_URL, DATA_KEY } = window.CONFIG_GLOBAL;
     let url = `${BASE_URL[NODE_ENV]}/${REST_URL.responseTime[NODE_ENV]}?date=${date}`;
+    if (name !== "전체") {
+      url += `&name=${name}`;
+    }
     url = url.replace(/\+/g, "%2B"); // 특수문자(+) 퍼센트 인코딩
 
     const response = await callAPI(url);

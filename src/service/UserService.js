@@ -27,9 +27,15 @@ export default class UserService {
       url += `?name=${name}&type=${level2.menuId}&date=${date}&success=${state}&application_name=${level3.menuId}`;
     } else {
       const {
-        data: { dates },
+        data: { name, dates },
       } = params;
+
+      console.log(name);
+
       url += `?date=${dates.join(",")}`;
+      if (name !== "전체") {
+        url += `&name=${name}`;
+      }
     }
 
     url = url.replace(/\+/g, "%2B");
