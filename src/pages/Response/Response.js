@@ -250,7 +250,7 @@ const Response = ({ userService }) => {
               <h3 className="title">
                 <div className="browser">
                   <span className="circle">
-                    <AiFillAndroid />
+                    {os === "aos" ? <AiFillAndroid /> : <AiFillApple />}
                   </span>
                   {os.toUpperCase()}
                 </div>

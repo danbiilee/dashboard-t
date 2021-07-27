@@ -5,7 +5,7 @@ window.CONFIG_GLOBAL = {
     development: window.IS_LOCAL
       ? "http://localhost:3000/data"
       : "http://192.168.10.65:9003/gaservice/rest/tsquare",
-    production: "http://192.168.10.65:9003/gaservice/rest/tsquare",
+    production: "https://b2cmondash.amorepacific.com/gaservice/rest/tsquare",
   },
   REST_URL: {
     chart: {
@@ -35,6 +35,7 @@ window.CONFIG_GLOBAL = {
       },
     },
   },
+  B2C_DASH_URL: "https://b2cmondash.amorepacific.com/dashboard/view.do?no=2644",
   DATA_KEY: {
     development: window.IS_LOCAL ? "items" : "metricData",
     production: "metricData",
