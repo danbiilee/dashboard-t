@@ -72,8 +72,5 @@ module.exports = merge(common, {
       }),
       new CssMinimizerPlugin(),
     ],
-    // splitChunks: {
-    //   chunks: "all",
-    // },
   },
 });
