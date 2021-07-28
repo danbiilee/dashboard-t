@@ -113,6 +113,16 @@ const Response = ({ userService }) => {
         },
       },
     },
+    tooltip: {
+      ...INIT_OPTIONS.tooltip,
+      formatter: function () {
+        const points = this.points;
+        points.sort((a, b) => b.y - a.y);
+        return points.reduce(function (s, point) {
+          return `${s} ${point.series.name}: ${point.y}<br/>`;
+        }, "");
+      },
+    },
     legend: {
       symbolWidth: 0,
       symbolHeight: 0,

@@ -68,27 +68,47 @@ window.CONFIG_CHART = {
         color: "#fff",
         fontWeight: "normal",
       },
+      useHTML: true,
       formatter: function () {
+        // 기능테스트에만 적용
         const points = this.points;
         points.sort((a, b) => b.y - a.y);
 
         const passList = [];
+        const failList = [];
         for (let p of points) {
-          if (!p.series.name.includes("Fail")) passList.push(p.series.name);
+          if (!p.series.name.includes("Fail")) passList.push(p);
         }
-
-        let i = 0;
-        let bundled = [];
-        while (i < passList.length) {
-          bundled = bundled.concat(
-            points.filter((p) => p.series.name.includes(passList[i]))
+        // passList 순서에 따라 failList 구하기
+        for (let pass of passList) {
+          const fail = points.find(
+            (p) =>
+              p.series.name.includes(pass.series.name) &&
+              p.series.name.includes("Fail")
           );
-          i++;
+          failList.push(fail);
         }
 
-        return bundled.reduce(function (s, point) {
-          return s + "<br/>" + point.series.name + ": " + point.y;
+        // 합계 추가
+        for (let pass of passList) {
+          const fail = failList.find((f) =>
+            f.series.name.includes(pass.series.name)
+          );
+
+          pass.total = pass.y + fail.y;
+          fail.total = pass.y + fail.y;
+        }
+
+        let str = passList.reduce(function (s, point) {
+          return `${s} ${point.series.name}(Pass): ${point.total}(${point.y})<br/>`;
         }, "");
+        str +=
+          '<div style="width: 100%; height: 1px; margin: 5px 0; background: #fff;"></div>';
+        str += failList.reduce(function (s, point) {
+          return `${s} ${point.series.name}: ${point.total}(${point.y})<br/>`;
+        }, "");
+
+        return str;
       },
     },
     legend: {
