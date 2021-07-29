@@ -109,7 +109,7 @@ const Mall = ({ userService }) => {
       );
       const pass = {
         ...INIT_SERIES_OPTIONS,
-        name: filtered[0].DEVICE_NAME,
+        name: `${filtered[0].DEVICE_NAME}(Pass)`,
         color: COLORS[i],
         marker: { ...INIT_SERIES_OPTIONS.marker, lineColor: COLORS[i] },
       };

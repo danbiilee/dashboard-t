@@ -79,12 +79,13 @@ window.CONFIG_CHART = {
         for (let p of points) {
           if (!p.series.name.includes("Fail")) passList.push(p);
         }
+
         // passList 순서에 따라 failList 구하기
         for (let pass of passList) {
           const fail = points.find(
             (p) =>
-              p.series.name.includes(pass.series.name) &&
-              p.series.name.includes("Fail")
+              p.series.name.includes("Fail") &&
+              p.series.name.includes(pass.series.name.split("(Pass)")[0])
           );
           failList.push(fail);
         }
@@ -92,7 +93,7 @@ window.CONFIG_CHART = {
         // 합계 추가
         for (let pass of passList) {
           const fail = failList.find((f) =>
-            f.series.name.includes(pass.series.name)
+            f.series.name.includes(pass.series.name.split("(Pass)")[0])
           );
 
           pass.total = pass.y + fail.y;
@@ -100,7 +101,7 @@ window.CONFIG_CHART = {
         }
 
         let str = passList.reduce(function (s, point) {
-          return `${s} ${point.series.name}(Pass): ${point.total}(${point.y})<br/>`;
+          return `${s} ${point.series.name}: ${point.total}(${point.y})<br/>`;
         }, "");
         str +=
           '<div style="width: 100%; height: 1px; margin: 5px 0; background: #fff;"></div>';
