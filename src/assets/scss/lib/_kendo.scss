@@ -21,7 +21,7 @@
 
 // DatePicker
 .k-datepicker {
-  width: 24rem;
+  width: 22rem;
   height: 48px;
   margin-right: 2rem;
   border: 1px solid #abb3c1;
@@ -64,7 +64,10 @@
 
 // DropDownList
 .k-dropdown {
-  width: 30rem;
+  width: 25rem;
+  &.level2 {
+    width: 18rem;
+  }
   height: 48px;
   margin-right: 2rem;
   border: 1px solid #abb3c1;
@@ -182,7 +185,7 @@
   font-weight: bold;
 }
 
-@media screen and (max-width: 1800px) {
+@media screen and (max-width: 1835px) {
   label {
     font-size: 1.4rem;
   }
@@ -201,13 +204,22 @@
     .k-picker-wrap .k-dateinput {
       font-size: 1.4rem;
     }
-    .k-select .k-icon {
-      font-size: 1.8rem;
+    .k-select {
+      padding-left: 0;
+      .k-icon {
+        font-size: 1.8rem;
+      }
     }
   }
   .k-dropdown {
-    width: 19rem;
+    width: 17rem;
+    &.level2 {
+      width: 14rem;
+    }
     margin-right: 1.3rem;
+    &.level3Res {
+      margin-right: 2rem;
+    }
     font-size: 1.4rem;
   }
   .k-list {
@@ -215,6 +227,9 @@
     .k-item {
       padding: 0.7rem;
     }
+  }
+  .k-button.k-flat {
+    width: 6rem;
   }
   // LNB
   .details .k-button.k-flat {

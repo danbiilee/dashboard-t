@@ -6,7 +6,6 @@ window.CONFIG_NAV = {
         menuId: "APPLICATION",
         menuValue: "직영몰",
         order: 1,
-        isResponse: false,
         active: true,
       },
       {
@@ -14,15 +13,6 @@ window.CONFIG_NAV = {
         menuId: "BRAND",
         menuValue: "브랜드",
         order: 2,
-        isResponse: false,
-        active: true,
-      },
-      {
-        id: 2,
-        menuId: "RESPONSE_MALL",
-        menuValue: "직영몰",
-        order: 1,
-        isResponse: true,
         active: true,
       },
     ],

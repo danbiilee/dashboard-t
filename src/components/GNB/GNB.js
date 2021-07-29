@@ -33,13 +33,10 @@ const Wrapper = styled.nav`
     justify-content: center;
   }
   .response {
-    flex: 0.8;
     height: 48px;
+    padding-left: 2rem;
     border: 1px solid #abb3c1;
     border-width: 0 1px;
-    label {
-      margin-right: 0;
-    }
   }
   .search {
     padding-left: ${({ theme }) => theme.size.componentSpace};
@@ -58,16 +55,22 @@ const RadioLabel = styled.label`
     `}
 `;
 
+// 응답시간 드롭다운 리스트
+const level3ResList = window.CONFIG_NAV.TREE.children.RESPONSE_MALL.filter(
+  (menu) => menu.active
+).sort((a, b) => a.order - b.order);
+
 const GNB = ({ userService }) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const {
-    inputs: { level1, level2, level3, startDate, endDate },
+    inputs: { level1, level2, level3, level3Res, startDate, endDate },
   } = useSelector((state) => state.control);
   const [selectedInputs, setSelectedInputs] = useState({
     level1,
     level2,
     level3,
+    level3Res,
     startDate,
     endDate,
   });
@@ -78,20 +81,19 @@ const GNB = ({ userService }) => {
 
   // 드롭다운 리스트 초기화: level2List
   useEffect(() => {
-    const { parent } = window.CONFIG_NAV.TREE;
-    let filtered = parent.filter((menu) => menu.active);
-
-    if (selectedInputs.level1 !== "응답시간") {
-      filtered = filtered.filter((item) => !item.isResponse);
-    } else {
-      filtered = filtered.filter((item) => item.isResponse);
-    }
-    filtered.sort((a, b) => a.order - b.order);
+    const { parent, children } = window.CONFIG_NAV.TREE;
+    const filtered = parent
+      .filter((menu) => menu.active)
+      .sort((a, b) => a.order - b.order);
 
     setLevel2List(filtered);
     setSelectedInputs((prevState) => ({
       ...prevState,
       level2: filtered[0],
+      level3: children[filtered[0].menuId]
+        .filter((item) => item.active)
+        .sort((a, b) => a.order - b.order)[0],
+      level3Res: level3ResList[0],
     }));
   }, [selectedInputs.level1]);
 
@@ -146,12 +148,14 @@ const GNB = ({ userService }) => {
   };
 
   const onClick = useCallback(async () => {
-    const { level1, level2, level3, startDate, endDate } = selectedInputs;
+    const { level1, level2, level3, level3Res, startDate, endDate } =
+      selectedInputs;
     dispatch(
       setInputs({
         level1,
         level2,
         level3,
+        level3Res,
         startDate,
         endDate,
       })
@@ -174,7 +178,7 @@ const GNB = ({ userService }) => {
         history.push("/brand");
       }
     } else {
-      dispatch(fetchResponseTimes({ name: level3.menuId, date: result }));
+      dispatch(fetchResponseTimes({ name: level3Res.menuId, date: result }));
       history.push("/response");
     }
   }, [selectedInputs, history, dispatch, userService]);
@@ -195,10 +199,12 @@ const GNB = ({ userService }) => {
             기능테스트
           </RadioLabel>
           <DropDownList
+            className="level2"
             data={level2List}
             value={selectedInputs.level2}
             textField="menuValue"
             dataItemKey="id"
+            disabled={selectedInputs.level1 === "응답시간"}
             onChange={(e) => {
               setSelectedInputs({
                 ...selectedInputs,
@@ -211,6 +217,7 @@ const GNB = ({ userService }) => {
             value={selectedInputs.level3}
             textField="menuValue"
             dataItemKey="id"
+            disabled={selectedInputs.level1 === "응답시간"}
             onChange={(e) =>
               setSelectedInputs({
                 ...selectedInputs,
@@ -231,6 +238,20 @@ const GNB = ({ userService }) => {
           <RadioLabel htmlFor="response" checked={level1 === "응답시간"}>
             응답시간
           </RadioLabel>
+          <DropDownList
+            className="level3Res"
+            data={level3ResList}
+            value={selectedInputs.level3Res}
+            textField="menuValue"
+            dataItemKey="id"
+            disabled={selectedInputs.level1 === "기능테스트"}
+            onChange={(e) =>
+              setSelectedInputs({
+                ...selectedInputs,
+                level3Res: e.target.value,
+              })
+            }
+          />
         </li>
         <li className="search">
           <label htmlFor="startDate">검색시작일</label>

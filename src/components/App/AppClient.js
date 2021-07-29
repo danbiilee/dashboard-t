@@ -17,7 +17,7 @@ import "../../assets/scss/main.scss";
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  min-width: 1320px;
+  min-width: 1420px;
   height: 100%;
   background-color: #f8f9fa;
   background-color: yellow;

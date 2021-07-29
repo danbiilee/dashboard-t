@@ -80,7 +80,7 @@ const Response = ({ userService }) => {
     (state) => state.responseTime
   );
   const {
-    inputs: { level3, startDate, endDate },
+    inputs: { level3Res, startDate, endDate },
   } = useSelector((state) => state.control);
 
   // highcharts 데이터
@@ -274,7 +274,7 @@ const Response = ({ userService }) => {
                       params={{
                         type: "responseTime",
                         data: {
-                          name: level3.menuId,
+                          name: level3Res.menuId,
                           dates: getDateList(startDate, endDate),
                         },
                       }}
