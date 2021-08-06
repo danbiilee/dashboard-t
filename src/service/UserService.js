@@ -30,8 +30,6 @@ export default class UserService {
         data: { name, dates },
       } = params;
 
-      console.log(name);
-
       url += `?date=${dates.join(",")}`;
       if (name !== "전체") {
         url += `&name=${name}`;
