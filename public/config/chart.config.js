@@ -100,14 +100,16 @@ window.CONFIG_CHART = {
           fail.total = pass.y + fail.y;
         }
 
-        let str = passList.reduce(function (s, point) {
-          return `${s} ${point.series.name}: ${point.total}(${point.y})<br/>`;
-        }, "");
+        const getHtmlString = (list) => {
+          return list.reduce(function (s, point) {
+            return `${s} ${point.series.name}: ${point.total}(${point.y})<br/>`;
+          }, "");
+        };
+
+        let str = getHtmlString(passList);
         str +=
           '<div style="width: 100%; height: 1px; margin: 5px 0; background: #fff;"></div>';
-        str += failList.reduce(function (s, point) {
-          return `${s} ${point.series.name}: ${point.total}(${point.y})<br/>`;
-        }, "");
+        str += getHtmlString(failList);
 
         return str;
       },
