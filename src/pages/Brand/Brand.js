@@ -13,6 +13,11 @@ import HighchartsReact from "highcharts-react-official";
 import { convertDateFormat } from "../../utils";
 import Indicator from "../../components/Indicator";
 import UserService from "../../service/UserService";
+import {
+  CHART_COLORS,
+  INIT_OPTIONS,
+  INIT_SERIES_OPTIONS,
+} from "../../constants/chart";
 
 const Wrapper = styled.div`
   flex: 1;
@@ -82,7 +87,6 @@ const Brand = ({ userService }) => {
     chrome: [],
     safari: [],
   });
-  const { INIT_OPTIONS } = window.CONFIG_CHART;
   const categories = dates.map((date) => Date.parse(date));
   const options = {
     ...INIT_OPTIONS,
@@ -129,7 +133,6 @@ const Brand = ({ userService }) => {
     );
 
     // highcharts 데이터
-    const { COLORS, INIT_SERIES_OPTIONS } = window.CONFIG_CHART;
     const highData = {
       chrome: [],
       safari: [],
@@ -160,14 +163,14 @@ const Brand = ({ userService }) => {
         let pass = {
           ...INIT_SERIES_OPTIONS,
           name: `${filtered[0].DEVICE_NAME}(Pass)`,
-          color: COLORS[i],
-          marker: { ...INIT_SERIES_OPTIONS.marker, lineColor: COLORS[i] },
+          color: CHART_COLORS[i],
+          marker: { ...INIT_SERIES_OPTIONS.marker, lineColor: CHART_COLORS[i] },
         };
         let fail = {
           ...INIT_SERIES_OPTIONS,
           name: `${filtered[0].DEVICE_NAME}(Fail)`,
-          color: COLORS[i],
-          marker: { ...INIT_SERIES_OPTIONS.marker, lineColor: COLORS[i] },
+          color: CHART_COLORS[i],
+          marker: { ...INIT_SERIES_OPTIONS.marker, lineColor: CHART_COLORS[i] },
           dashStyle: "shortdash",
         };
 
