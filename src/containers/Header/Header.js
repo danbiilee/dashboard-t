@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { Button } from "@progress/kendo-react-buttons";
 
 const Wrapper = styled.header`
   position: relative;
@@ -22,11 +21,6 @@ const Wrapper = styled.header`
     font-size: 2.8rem;
     line-height: 70px;
   }
-  .btn {
-    position: absolute;
-    top: calc((100% - 40px) / 2);
-    right: 2rem;
-  }
 `;
 
 const Header = () => {
@@ -34,15 +28,6 @@ const Header = () => {
     <Wrapper>
       <h1 className="logo">AP QA</h1>
       <h2 className="title">기능 및 성능테스트 조회</h2>
-      <div className="go-amore">
-        <Button
-          className="btn"
-          look="flat"
-          onClick={() => window.open(window.CONFIG_GLOBAL.B2C_DASH_URL)}
-        >
-          b2c 대시보드
-        </Button>
-      </div>
     </Wrapper>
   );
 };
