@@ -60,6 +60,7 @@ const level3ResList = window.CONFIG_NAV.TREE.children.RESPONSE_MALL.filter(
   (menu) => menu.active
 ).sort((a, b) => a.order - b.order);
 
+// eslint-disable-next-line no-unused-vars
 const GNB = ({ userService }) => {
   const history = useHistory();
   const dispatch = useDispatch();
@@ -161,14 +162,16 @@ const GNB = ({ userService }) => {
       })
     );
 
-    const result = await userService.checkHoliday(selectedInputs);
+    // const result = await userService.checkHoliday(selectedInputs);
     if (level1 === "기능테스트") {
       dispatch(
         fetchFunctionTests({
-          flag: "chart",
-          date: result,
-          name: level3.menuId,
-          type: level2.menuId,
+          refType: "chart",
+          params: {
+            type: level2.menuId,
+            applicationName: level3.menuId,
+            dates: [startDate, endDate],
+          },
         })
       );
 
@@ -178,10 +181,15 @@ const GNB = ({ userService }) => {
         history.push("/brand");
       }
     } else {
-      dispatch(fetchResponseTimes({ name: level3Res.menuId, date: result }));
+      dispatch(
+        fetchResponseTimes({
+          brandName: level3Res.menuId,
+          dates: [startDate, endDate],
+        })
+      );
       history.push("/response");
     }
-  }, [selectedInputs, history, dispatch, userService]);
+  }, [selectedInputs, history, dispatch]);
 
   return (
     <Wrapper>

@@ -75,12 +75,15 @@ const LNB = ({ userService }) => {
   const handleFetchDetail = () => {
     dispatch(
       fetchFunctionTests({
-        flag: "detail",
-        date: selectedInputs.date,
-        name: selectedInputs.name,
-        success: selectedInputs.state,
-        type: level2.menuId,
-        application_name: level3.menuId,
+        refType: "detail",
+        params: {
+          type: level2.menuId,
+          applicationName: level3.menuId,
+          deviceName: selectedInputs.name,
+          language: undefined,
+          date: selectedInputs.date,
+          status: selectedInputs.state,
+        },
       })
     );
   };

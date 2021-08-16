@@ -117,12 +117,14 @@ const Brand = ({ userService }) => {
 
     dispatch(
       fetchFunctionTests({
-        flag: "detail",
-        date: dateList[dateList.length - 1], // 가장 최근 날짜
-        name: langList[0],
-        success: "Fail", // Default
-        type: level2.menuId,
-        application_name: level3.menuId,
+        refType: "detail",
+        params: {
+          type: level2.menuId,
+          applicationName: level3.menuId,
+          language: langList[0],
+          date: dateList[dateList.length - 1], // 가장 최근 날짜
+          status: "Fail", // Default
+        },
       })
     );
 

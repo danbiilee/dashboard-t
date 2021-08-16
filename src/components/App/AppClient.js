@@ -9,7 +9,6 @@ import Main from "../../containers/Main";
 import Mall from "../../pages/Mall";
 import Brand from "../../pages/Brand";
 import Response from "../../pages/Response";
-import { getDateList } from "../../utils";
 import UserService from "../../service/UserService";
 import "@progress/kendo-theme-material/dist/all.scss";
 import "../../assets/scss/main.scss";
@@ -35,10 +34,12 @@ const AppClient = ({ userService }) => {
     pathname !== "/" && history.push("/"); // url 초기화
     dispatch(
       fetchFunctionTests({
-        flag: "chart",
-        date: getDateList(startDate, endDate).join(","),
-        name: level3.menuId,
-        type: level2.menuId,
+        refType: "chart",
+        params: {
+          type: level2.menuId,
+          applicationName: level3.menuId,
+          dates: [startDate, endDate],
+        },
       })
     );
   }, []);
