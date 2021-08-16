@@ -12,6 +12,7 @@ import { convertDateFormat, getMinFromEndDate } from "../../utils";
 import { fetchResponseTimes } from "../../redux/responseTimeSlice";
 import { fetchFunctionTests } from "../../redux/functionTestSlice";
 import UserService from "../../service/UserService";
+import { NAV_LEVEL2, NAV_LEVEL3 } from "../../constants/nav";
 
 const Wrapper = styled.nav`
   height: 70px;
@@ -56,7 +57,7 @@ const RadioLabel = styled.label`
 `;
 
 // 응답시간 드롭다운 리스트
-const level3ResList = window.CONFIG_NAV.TREE.children.RESPONSE_MALL.filter(
+const level3ResList = NAV_LEVEL3.RESPONSE_MALL.filter(
   (menu) => menu.active
 ).sort((a, b) => a.order - b.order);
 
@@ -82,16 +83,15 @@ const GNB = ({ userService }) => {
 
   // 드롭다운 리스트 초기화: level2List
   useEffect(() => {
-    const { parent, children } = window.CONFIG_NAV.TREE;
-    const filtered = parent
-      .filter((menu) => menu.active)
-      .sort((a, b) => a.order - b.order);
+    const filtered = NAV_LEVEL2.filter((menu) => menu.active).sort(
+      (a, b) => a.order - b.order
+    );
 
     setLevel2List(filtered);
     setSelectedInputs((prevState) => ({
       ...prevState,
       level2: filtered[0],
-      level3: children[filtered[0].menuId]
+      level3: NAV_LEVEL3[filtered[0].menuId]
         .filter((item) => item.active)
         .sort((a, b) => a.order - b.order)[0],
       level3Res: level3ResList[0],
@@ -100,8 +100,7 @@ const GNB = ({ userService }) => {
 
   // 드롭다운 리스트 초기화: level3List
   useEffect(() => {
-    const { children } = window.CONFIG_NAV.TREE;
-    const list = children[selectedInputs.level2.menuId]
+    const list = NAV_LEVEL3[selectedInputs.level2.menuId]
       .filter((item) => item.active)
       .sort((a, b) => a.order - b.order);
 
