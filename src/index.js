@@ -8,7 +8,6 @@ import { store } from "./redux";
 import { Provider } from "react-redux";
 import UserService from "./service/UserService";
 
-window.CONFIG_GLOBAL.NODE_ENV = process.env.NODE_ENV;
 const userService = new UserService();
 
 ReactDOM.render(
