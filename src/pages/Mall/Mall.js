@@ -12,6 +12,11 @@ import { setValidList } from "../../redux/controlSlice";
 import Indicator from "../../components/Indicator";
 import UserService from "../../service/UserService";
 import { convertDateFormat } from "../../utils";
+import {
+  CHART_COLORS,
+  INIT_OPTIONS,
+  INIT_SERIES_OPTIONS,
+} from "../../constants/chart";
 
 const Wrapper = styled.div`
   flex: 1;
@@ -55,7 +60,6 @@ const Mall = ({ userService }) => {
   } = useSelector((state) => state.control);
 
   const [series, setSeries] = useState([]);
-  const { INIT_OPTIONS } = window.CONFIG_CHART;
   const categories = dates.map((date) => Date.parse(date));
   const options = {
     ...INIT_OPTIONS,
@@ -103,7 +107,6 @@ const Mall = ({ userService }) => {
     );
 
     // highcharts 데이터
-    const { COLORS, INIT_SERIES_OPTIONS } = window.CONFIG_CHART;
     const seriesTmp = [];
     for (let i = 0; i < deviceList.length; i++) {
       const filtered = chartList.filter(
@@ -112,14 +115,14 @@ const Mall = ({ userService }) => {
       const pass = {
         ...INIT_SERIES_OPTIONS,
         name: `${filtered[0].DEVICE_NAME}(Pass)`,
-        color: COLORS[i],
-        marker: { ...INIT_SERIES_OPTIONS.marker, lineColor: COLORS[i] },
+        color: CHART_COLORS[i],
+        marker: { ...INIT_SERIES_OPTIONS.marker, lineColor: CHART_COLORS[i] },
       };
       const fail = {
         ...INIT_SERIES_OPTIONS,
         name: `${filtered[0].DEVICE_NAME}(Fail)`,
-        color: COLORS[i],
-        marker: { ...INIT_SERIES_OPTIONS.marker, lineColor: COLORS[i] },
+        color: CHART_COLORS[i],
+        marker: { ...INIT_SERIES_OPTIONS.marker, lineColor: CHART_COLORS[i] },
         dashStyle: "shortdash",
       };
 

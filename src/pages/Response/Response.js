@@ -10,6 +10,11 @@ import { convertDateFormat, getDateList } from "../../utils";
 import Indicator from "../../components/Indicator";
 import UserService from "../../service/UserService";
 import ExcelDownButton from "../../components/ExcelDownButton/ExcelDownButton";
+import {
+  CHART_COLORS,
+  INIT_OPTIONS,
+  INIT_SERIES_OPTIONS,
+} from "../../constants/chart";
 
 const Div = styled.div`
   margin-bottom: ${({ theme }) => theme.size.baseSpace};
@@ -96,7 +101,6 @@ const Response = ({ userService }) => {
       login: [],
     },
   });
-  const { INIT_OPTIONS } = window.CONFIG_CHART;
   const defaultOptions = {
     ...INIT_OPTIONS,
     chart: {
@@ -150,7 +154,6 @@ const Response = ({ userService }) => {
     }
 
     // highcharts 데이터
-    const { COLORS, INIT_SERIES_OPTIONS } = window.CONFIG_CHART;
     const brands = {
       aos: [],
       ios: [],
@@ -199,8 +202,8 @@ const Response = ({ userService }) => {
         const initSeries = {
           ...INIT_SERIES_OPTIONS,
           name: filtered[0].BRAND_NAME,
-          color: COLORS[i],
-          marker: { ...INIT_SERIES_OPTIONS.marker, lineColor: COLORS[i] },
+          color: CHART_COLORS[i],
+          marker: { ...INIT_SERIES_OPTIONS.marker, lineColor: CHART_COLORS[i] },
         };
         const mainData = [];
         const searchData = [];
