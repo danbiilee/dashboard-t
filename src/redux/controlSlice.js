@@ -1,16 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getStartDate, convertDateFormat } from "../utils";
+import { NAV_LEVEL2, NAV_LEVEL3 } from "../constants/nav";
 
 const MAX_END_DATE_STR = "2021-07-14";
 
 const initialState = {
   inputs: {
     level1: "기능테스트",
-    level2: window.CONFIG_NAV.TREE.parent
-      .filter((menu) => menu.active)
-      .sort((a, b) => a.order - b.order)[0],
+    level2: NAV_LEVEL2.filter((menu) => menu.active).sort(
+      (a, b) => a.order - b.order
+    )[0],
     level3: undefined,
-    level3Res: window.CONFIG_NAV.TREE.children.RESPONSE_MALL.find(
+    level3Res: NAV_LEVEL3.RESPONSE_MALL.find(
       (menu) => menu.active && menu.order === 1
     ),
     startDate: convertDateFormat(getStartDate(new Date(MAX_END_DATE_STR))),
@@ -22,9 +23,9 @@ const initialState = {
     langs: [],
   },
 };
-initialState.inputs.level3 = window.CONFIG_NAV.TREE.children[
-  initialState.inputs.level2.menuId
-].find((menu) => menu.active && menu.order === 1);
+initialState.inputs.level3 = NAV_LEVEL3[initialState.inputs.level2.menuId].find(
+  (menu) => menu.active && menu.order === 1
+);
 
 export const controlSlice = createSlice({
   name: "control",
