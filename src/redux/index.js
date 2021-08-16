@@ -9,4 +9,8 @@ export const store = configureStore({
     responseTime: responseTimeReducer,
     functionTest: functionTestReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      immutableCheck: false,
+    }),
 });

@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { callAPI, getListConvertedKey } from "../utils";
+import FirestoreDatabase from "../service/firestore_database";
 
 const initialState = {
   isLoading: false,
@@ -14,19 +14,15 @@ const functionTestState = {
 
 export const fetchFunctionTests = createAsyncThunk(
   "function/fetchFunctionTests",
-  async ({ flag, date, name, type, application_name, success }) => {
-    const { NODE_ENV, BASE_URL, REST_URL, DATA_KEY } = window.CONFIG_GLOBAL;
-    let url = `${BASE_URL[NODE_ENV]}/${REST_URL[flag][NODE_ENV]}?date=${date}&name=${name}&type=${type}`;
-    if (flag === "detail") {
-      url += `&success=${success}&application_name=${application_name}`;
+  async ({ refType, params }) => {
+    const db = new FirestoreDatabase();
+    let result;
+    if (refType === "chart") {
+      result = await db.getFuncTest(params);
+    } else {
+      result = await db.getFuncTestDetil(params);
     }
-    url = url.replace(/\+/g, "%2B"); // 특수문자(+) 퍼센트 인코딩
-
-    const response = await callAPI(url);
-    const result = getListConvertedKey(response[DATA_KEY[NODE_ENV]]);
-    return result.sort(
-      (a, b) => new Date(a.START_TIME) - new Date(b.START_TIME)
-    );
+    return result;
   }
 );
 
@@ -35,25 +31,25 @@ export const functionTestSlice = createSlice({
   initialState: functionTestState,
   extraReducers: {
     [fetchFunctionTests.pending]: (state, action) => {
-      const { flag } = action.meta.arg;
-      state[flag].isLoading = true;
-      state[flag].list = [];
-      if (flag === "chart") {
+      const { refType } = action.meta.arg;
+      state[refType].isLoading = true;
+      state[refType].list = [];
+      if (refType === "chart") {
         state.detail.list = [];
       }
-      state[flag].isError = false;
+      state[refType].isError = false;
     },
     [fetchFunctionTests.fulfilled]: (state, action) => {
-      const { flag } = action.meta.arg;
+      const { refType } = action.meta.arg;
       const { payload } = action;
-      state[flag].isLoading = false;
-      state[flag].list = payload;
+      state[refType].isLoading = false;
+      state[refType].list = payload;
     },
     [fetchFunctionTests.rejected]: (state, action) => {
-      const { flag } = action.meta.arg;
-      state[flag].isError = true;
-      state[flag].list = [];
-      state[flag].isLoading = false;
+      const { refType } = action.meta.arg;
+      state[refType].isError = true;
+      state[refType].list = [];
+      state[refType].isLoading = false;
     },
   },
 });

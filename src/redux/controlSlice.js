@@ -1,6 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getStartDate, convertDateFormat } from "../utils";
 
+const MAX_END_DATE_STR = "2021-07-14";
+
 const initialState = {
   inputs: {
     level1: "기능테스트",
@@ -11,8 +13,8 @@ const initialState = {
     level3Res: window.CONFIG_NAV.TREE.children.RESPONSE_MALL.find(
       (menu) => menu.active && menu.order === 1
     ),
-    startDate: convertDateFormat(getStartDate()),
-    endDate: convertDateFormat(new Date()),
+    startDate: convertDateFormat(getStartDate(new Date(MAX_END_DATE_STR))),
+    endDate: MAX_END_DATE_STR,
   },
   validList: {
     dates: [],
