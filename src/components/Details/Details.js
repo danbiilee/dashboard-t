@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useEffect, useCallback, useRef, useState } from "react";
 import styled from "styled-components";
 import Detail from "./Detail";
 import { useSelector } from "react-redux";
 import Indicator from "../Indicator";
+import FirestoreDatabase from "../../service/firestore_database";
+
+const db = new FirestoreDatabase();
 
 const Wrapper = styled.ul`
   overflow-y: auto;
@@ -18,7 +21,58 @@ const Details = () => {
   const {
     detail: { isLoading, list, isError },
   } = useSelector((state) => state.functionTest);
-  const length = list.length;
+
+  const ulRef = useRef();
+  const totalRef = useRef(0);
+  const [storedList, setStoredList] = useState([]);
+  const [hasMore, setHasMore] = useState(true);
+  const [isInfiniteLoading, setIsInfiniteLoading] = useState(false);
+
+  useEffect(() => {
+    if (!list.length) {
+      return;
+    }
+
+    totalRef.current = list.length;
+    setStoredList(list.slice(0, 10));
+  }, [list]);
+
+  const handleScroll = useCallback(async () => {
+    const { clientHeight, scrollHeight, scrollTop } = ulRef.current;
+    const atBottom = Math.round(scrollTop + clientHeight) >= scrollHeight;
+
+    if (atBottom && hasMore) {
+      console.log("end--------------------");
+      setIsInfiniteLoading(true);
+      const nextList = await db.getFuncTestDetil({
+        // Test
+        type: "APPLICATION",
+        applicationName: "Epr",
+        deviceName: "iPhoneXR",
+        date: "2021-07-01",
+        status: "Pass",
+        lastPage: storedList.length,
+      });
+      setStoredList((prevState) => prevState.concat(nextList));
+      setIsInfiniteLoading(false);
+    }
+  }, [hasMore, storedList]);
+
+  useEffect(() => {
+    if (!storedList.length) {
+      return;
+    }
+
+    if (storedList.length === totalRef.current) {
+      setHasMore(false);
+    }
+
+    const ul = ulRef.current;
+    ul.addEventListener("scroll", handleScroll);
+    return () => {
+      ul.removeEventListener("scroll", handleScroll);
+    };
+  }, [storedList, handleScroll]);
 
   return (
     <>
@@ -26,11 +80,11 @@ const Details = () => {
       {isLoading && <Indicator type="loading" isDetail={true} />}
       {!isLoading &&
         !isError &&
-        (!list.length ? (
+        (!storedList.length ? (
           <Indicator type="empty" isDetail={true} />
         ) : (
-          <Wrapper>
-            {list.map((detail, index) => (
+          <Wrapper ref={ulRef}>
+            {storedList.map((detail, index) => (
               <Detail
                 key={index}
                 detail={detail}
@@ -42,6 +96,9 @@ const Details = () => {
                 }
               />
             ))}
+            {hasMore && isInfiniteLoading && (
+              <div style={{ fontSize: "10rem" }}>...loading</div>
+            )}
           </Wrapper>
         ))}
     </>
