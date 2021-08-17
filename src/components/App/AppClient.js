@@ -35,11 +35,17 @@ const AppClient = ({ userService }) => {
     dispatch(
       fetchFunctionTests({
         refType: "chart",
+        // Test
         params: {
           type: level2.menuId,
-          applicationName: level3.menuId,
+          applicationName: "Epr",
           dates: [startDate, endDate],
         },
+        // params: {
+        //   type: level2.menuId,
+        //   applicationName: level3.menuId,
+        //   dates: [startDate, endDate],
+        // },
       })
     );
   }, []);

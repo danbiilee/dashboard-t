@@ -96,13 +96,22 @@ const Mall = ({ userService }) => {
     dispatch(
       fetchFunctionTests({
         refType: "detail",
+        // Test
         params: {
           type: level2.menuId,
-          applicationName: level3.menuId,
-          deviceName: deviceList[0],
-          date: dateList[dateList.length - 1], // 가장 최근 날짜
-          status: "Fail", // Default
+          applicationName: "Epr",
+          deviceName: "iPhoneXR",
+          date: "2021-07-01",
+          status: "Pass",
+          lastPage: 0,
         },
+        // params: {
+        //   type: level2.menuId,
+        //   applicationName: level3.menuId,
+        //   deviceName: deviceList[0],
+        //   date: dateList[dateList.length - 1], // 가장 최근 날짜
+        //   status: "Fail", // Default
+        // },
       })
     );
 
