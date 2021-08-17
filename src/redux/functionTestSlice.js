@@ -33,23 +33,24 @@ export const functionTestSlice = createSlice({
     [fetchFunctionTests.pending]: (state, action) => {
       const { refType } = action.meta.arg;
       state[refType].isLoading = true;
+      state[refType].isError = false;
       state[refType].list = [];
       if (refType === "chart") {
         state.detail.list = [];
       }
-      state[refType].isError = false;
     },
     [fetchFunctionTests.fulfilled]: (state, action) => {
       const { refType } = action.meta.arg;
       const { payload } = action;
-      state[refType].isLoading = false;
       state[refType].list = payload;
+      state[refType].isLoading = false;
+      state[refType].isError = false;
     },
     [fetchFunctionTests.rejected]: (state, action) => {
       const { refType } = action.meta.arg;
       state[refType].isError = true;
-      state[refType].list = [];
       state[refType].isLoading = false;
+      state[refType].list = [];
     },
   },
 });

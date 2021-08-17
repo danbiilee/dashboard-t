@@ -5,6 +5,10 @@ const FUNC_TEST_DETAIL = "FUNC_TEST_DETAIL";
 const RESPONSE_TIME = "RESPONSE_TIME";
 
 export default class FirestoreDatabase {
+  constructor() {
+    this.DETAIL_LIMIT = 10;
+  }
+
   async getFuncTest({ type, applicationName, dates }) {
     const [startDate, endDate] = dates;
     const ref = firestore.collection(FUNC_TEST);
@@ -31,7 +35,14 @@ export default class FirestoreDatabase {
     return new Promise((resolve) => resolve(result));
   }
 
-  async getFuncTestDetil({ type, applicationName, deviceName, date, status }) {
+  async getFuncTestDetil({
+    type,
+    applicationName,
+    deviceName,
+    date,
+    status,
+    lastPage,
+  }) {
     const chartref = firestore.collection(FUNC_TEST);
     const detailref = firestore.collection(FUNC_TEST_DETAIL);
 
@@ -59,7 +70,25 @@ export default class FirestoreDatabase {
 
     detailQuery = detailref
       .where("AMORE_TSQUARE_ID", "==", chartData.ID)
-      .where("STATUS", "==", status);
+      .where("STATUS", "==", status)
+      .orderBy("TITLE");
+
+    if (lastPage) {
+      detailQuery = detailQuery.limit(lastPage);
+      try {
+        detailQuery = await detailQuery.get().then((detailSnaps) => {
+          const lastVisible = detailSnaps.docs[detailSnaps.docs.length - 1];
+          return detailref
+            .where("AMORE_TSQUARE_ID", "==", chartData.ID)
+            .where("STATUS", "==", status)
+            .orderBy("TITLE")
+            .startAfter(lastVisible)
+            .limit(this.DETAIL_LIMIT);
+        });
+      } catch (error) {
+        console.error(`Not Found DetailData From Lastvisible \n${error}`);
+      }
+    }
 
     try {
       detailData = await detailQuery.get().then((detailSnaps) => detailSnaps);
